@@ -11,8 +11,40 @@
 			"name": "Authentication",
 			"item": [
 				{
-					"name": "Registration Success",
+					"name": "Registration",
 					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"// Generate a random name\r",
+									"function generateRandomName() {\r",
+									"    const firstNames = [\"John\", \"Alice\", \"Bob\", \"Emma\", \"David\",\"Jhony\"]; // Add more first names as needed\r",
+									"    const lastNames = [\"Smith\", \"Johnson\", \"Doe\", \"Brown\", \"Wilson\"]; // Add more last names as needed\r",
+									"    const randomFirstName = firstNames[Math.floor(Math.random() * firstNames.length)];\r",
+									"    const randomLastName = lastNames[Math.floor(Math.random() * lastNames.length)];\r",
+									"    return `${randomFirstName} ${randomLastName}`;\r",
+									"}\r",
+									"const randomName = generateRandomName();\r",
+									"// Store the random name in an environment variable\r",
+									"pm.environment.set('random_name', randomName);\r",
+									"\r",
+									"\r",
+									"// Generate a random email address\r",
+									"function generateRandomEmail() {\r",
+									"    const username = Math.random().toString(36).substring(2, 12); // Generate a random username\r",
+									"    const domain = 'google.com'; // Replace 'example.com' with your desired domain\r",
+									"    return `${username}@${domain}`;\r",
+									"}\r",
+									"const randomEmail = generateRandomEmail();\r",
+									"// Store the random email in an environment variable\r",
+									"pm.environment.set('random_email', randomEmail);\r",
+									"\r",
+									"pm.environment.set('Password', \"12345\");"
+								],
+								"type": "text/javascript"
+							}
+						},
 						{
 							"listen": "test",
 							"script": {
@@ -24,7 +56,14 @@
 									"pm.test(\"Response time is less than 200ms\", function () {\r",
 									"    pm.expect(pm.response.responseTime).to.be.below(200);\r",
 									"});\r",
-									""
+									"\r",
+									"var jsonData = pm.response.json();\r",
+									"\r",
+									"pm.environment.set(\"Secondhand_Email\", jsonData.user.email);\r",
+									"\r",
+									"pm.environment.set(\"Secondhand_UserID\", jsonData.user.id);\r",
+									"\r",
+									"pm.environment.set(\"Secondhand_Password\", jsonData.session.token);"
 								],
 								"type": "text/javascript"
 							}
@@ -35,7 +74,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n  \"user\": {\r\n    \"name\": \"{{$randomFullName}}\",\r\n    \"email\": \"{{$randomEmail}}\",\r\n    \"password\": \"12345\"\r\n  }\r\n}",
+							"raw": "{\r\n  \"user\": {\r\n    \"name\": \"{{random_name}}\",\r\n    \"email\": \"{{random_email}}\",\r\n    \"password\": \"{{Password}}\"\r\n  }\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -88,7 +127,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n  \"user\": {\r\n    \"email\": \"skylar_koch69@hotmail.com\",\r\n    \"password\": \"12345\"\r\n  }\r\n}",
+							"raw": "{\r\n  \"user\": {\r\n    \"email\": \"{{random_email}}\",\r\n    \"password\": \"{{Password}}\"\r\n  }\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -239,13 +278,13 @@
 							}
 						},
 						"url": {
-							"raw": "{{secondhand}}/users/87219/offers.json",
+							"raw": "{{secondhand}}/users/{{Secondhand_UserID}}/offers.json",
 							"host": [
 								"{{secondhand}}"
 							],
 							"path": [
 								"users",
-								"87219",
+								"{{Secondhand_UserID}}",
 								"offers.json"
 							]
 						}
@@ -278,7 +317,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n  \"offer\": {\r\n    \"status\": \"accepted\"\r\n  }\r\n}",
+							"raw": "{\r\n  \"offer\": {\r\n    \"status\": \"initiated\"\r\n  }\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -286,12 +325,9 @@
 							}
 						},
 						"url": {
-							"raw": "https://secondhand.binaracademy.org/offers/1.json",
-							"protocol": "https",
+							"raw": "{{secondhand}}/offers/1.json",
 							"host": [
-								"secondhand",
-								"binaracademy",
-								"org"
+								"{{secondhand}}"
 							],
 							"path": [
 								"offers",
@@ -317,6 +353,15 @@
 								],
 								"type": "text/javascript"
 							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
 						}
 					],
 					"request": {
@@ -324,7 +369,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n  \"offer\": {\r\n    \"price\": 1000,\r\n    \"to_id\": 1,\r\n    \"product_id\": 51047\r\n  }\r\n}",
+							"raw": "{\r\n  \"offer\": {\r\n    \"price\": 1000,\r\n    \"to_id\": 1,\r\n    \"product_id\": {{Secondhand_idBarang}}\r\n  }\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -362,7 +407,65 @@
 									"pm.test(\"Response time is less than 200ms\", function () {\r",
 									"    pm.expect(pm.response.responseTime).to.be.below(200);\r",
 									"});\r",
+									"\r",
+									"var jsonData = pm.response.json();\r",
+									"\r",
+									"pm.environment.set(\"Secondhand_PhoneNumber\", jsonData.user.phone_number);\r",
+									"\r",
+									"pm.environment.set(\"Secondhand_Address\", jsonData.user.address);\r",
+									"\r",
+									"pm.environment.set(\"Secondhand_Username\", jsonData.user.name);\r",
 									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"function generateRandomUsername() {\r",
+									"    const firstUsernames = [\"John\", \"Alice\", \"Bob\", \"Emma\", \"David\",\"Jhony\"]; // Add more first names as needed\r",
+									"    const lastUsernames = [\"81\", \"91\", \"101\", \"102\", \"103\"]; // Add more last names as needed\r",
+									"    const randomFirstUsernames = firstUsernames[Math.floor(Math.random() * firstUsernames.length)];\r",
+									"    const randomLastUsernames = lastUsernames[Math.floor(Math.random() * lastUsernames.length)];\r",
+									"    return `${randomFirstUsernames}${randomLastUsernames}`;\r",
+									"}\r",
+									"const ransomUsername = generateRandomUsername();\r",
+									"// Store the random name in an environment variable\r",
+									"pm.environment.set('random_Username', ransomUsername);\r",
+									"\r",
+									"\r",
+									"// Generate a random-looking Indonesian phone number\r",
+									"function generateRandomIndonesianPhoneNumber() {\r",
+									"    const prefixOptions = [\"0811\", \"0812\", \"0813\", \"0821\", \"0822\", \"0823\", \"0851\", \"0852\", \"0853\", \"0814\", \"0815\", \"0816\", \"0855\"];\r",
+									"    const selectedPrefix = prefixOptions[Math.floor(Math.random() * prefixOptions.length)];\r",
+									"    const remainingDigits = Math.floor(Math.random() * 1000000000).toString().padStart(9, '0');\r",
+									"    return selectedPrefix + remainingDigits;\r",
+									"}\r",
+									"const randomIndonesianPhoneNumber = generateRandomIndonesianPhoneNumber();\r",
+									"// Store the random Indonesian phone number in an environment variable\r",
+									"pm.environment.set('random_indonesian_phone_number', randomIndonesianPhoneNumber);\r",
+									"\r",
+									"// Generate a random-looking Indonesian address\r",
+									"function generateRandomIndonesianAddress() {\r",
+									"    const streets = [\"Jalan Merdeka\", \"Jalan Pahlawan\", \"Jalan Raya\", \"Jalan Cendrawasih\", \"Jalan Budi Utomo\", \"Jalan Diponegoro\"];\r",
+									"    const cities = [\"Jakarta\", \"Surabaya\", \"Bandung\", \"Yogyakarta\", \"Medan\", \"Semarang\"];\r",
+									"    const provinces = [\"Jakarta\", \"East Java\", \"West Java\", \"Yogyakarta\", \"North Sumatra\", \"Central Java\"];\r",
+									"    \r",
+									"    const randomStreet = streets[Math.floor(Math.random() * streets.length)];\r",
+									"    const randomCity = cities[Math.floor(Math.random() * cities.length)];\r",
+									"    const randomProvince = provinces[Math.floor(Math.random() * provinces.length)];\r",
+									"    \r",
+									"    return `${randomStreet}, ${randomCity}, ${randomProvince}`;\r",
+									"}\r",
+									"const randomIndonesianAddress = generateRandomIndonesianAddress();\r",
+									"// Store the random Indonesian address in an environment variable\r",
+									"pm.environment.set('random_indonesian_address', randomIndonesianAddress);\r",
+									"// Extract the city from the generated address\r",
+									"const city = randomIndonesianAddress.split(', ')[1];\r",
+									"// Store the extracted city in an environment variable\r",
+									"pm.environment.set('random_indonesian_city', city);"
 								],
 								"type": "text/javascript"
 							}
@@ -376,25 +479,25 @@
 							"formdata": [
 								{
 									"key": "user[name]",
-									"value": "{{$randomFullName}}}",
+									"value": "{{random_Username}}",
 									"description": "Username",
 									"type": "text"
 								},
 								{
 									"key": "user[phone_number]",
-									"value": "{{$randomPhoneNumber}}",
+									"value": "{{random_indonesian_phone_number}}",
 									"description": "Nomor Handphone",
 									"type": "text"
 								},
 								{
 									"key": "user[address]",
-									"value": "{{$randomStreetAddress}}",
+									"value": "{{random_indonesian_address}}",
 									"description": "Alamat",
 									"type": "text"
 								},
 								{
 									"key": "user[city_id] ",
-									"value": "2",
+									"value": "{{random_indonesian_city}}",
 									"description": "Kota",
 									"type": "text"
 								},
@@ -471,6 +574,79 @@
 									"pm.test(\"Response time is less than 200ms\", function () {\r",
 									"    pm.expect(pm.response.responseTime).to.be.below(200);\r",
 									"});\r",
+									"\r",
+									"var jsonData = pm.response.json();\r",
+									"\r",
+									"pm.environment.set(\"Secondhand_idBarang\", jsonData.product.id);\r",
+									"\r",
+									"pm.environment.set(\"Secondhand_namaBarang\", jsonData.product.name);\r",
+									"\r",
+									"pm.environment.set(\"Secondhand_CategoryBarang\", jsonData.product.category_id);"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"// Define an array of random IT computer product names\r",
+									"const computerProductNames = [\r",
+									"    \"Laptop\", \"Desktop Computer\", \"Monitor\", \"Keyboard\", \"Mouse\", \"Router\", \"External Hard Drive\",\r",
+									"    \"Webcam\", \"Printer\", \"Scanner\", \"Graphics Card\", \"Motherboard\", \"CPU\", \"RAM\", \"SSD\",\r",
+									"    \"Software License\", \"Tablet\", \"Server\", \"UPS\", \"Network Switch\"\r",
+									"];\r",
+									"// Generate a random IT computer product name\r",
+									"function generateRandomComputerProductName() {\r",
+									"    const randomIndex = Math.floor(Math.random() * computerProductNames.length);\r",
+									"    return computerProductNames[randomIndex];\r",
+									"}\r",
+									"const randomComputerProductName = generateRandomComputerProductName();\r",
+									"// Store the random computer product name in an environment variable\r",
+									"pm.environment.set('random_computer_product_name', randomComputerProductName);\r",
+									"\r",
+									"// Define an array of random product descriptions\r",
+									"const productDescriptions = [\r",
+									"    \"High-performance and reliable\",\r",
+									"    \"Sleek and modern design\",\r",
+									"    \"Built to last with top-quality materials\",\r",
+									"    \"Versatile and easy to use\",\r",
+									"    \"Cutting-edge technology for superior performance\",\r",
+									"    \"Ergonomically designed for comfort\",\r",
+									"    \"Enhance your productivity with this product\",\r",
+									"    \"Experience the future of technology\",\r",
+									"    \"Affordable and feature-packed\",\r",
+									"    \"Innovative and stylish\",\r",
+									"    \"Ideal for both personal and professional use\",\r",
+									"    \"Eco-friendly and energy-efficient\",\r",
+									"    \"Seamless connectivity and compatibility\",\r",
+									"    \"Get the job done with ease\",\r",
+									"    \"Upgrade your setup with this exceptional product\",\r",
+									"    \"Stay ahead with the latest in tech\",\r",
+									"];\r",
+									"\r",
+									"// Generate a random product description\r",
+									"function generateRandomProductDescription() {\r",
+									"    const randomIndex = Math.floor(Math.random() * productDescriptions.length);\r",
+									"    return productDescriptions[randomIndex];\r",
+									"}\r",
+									"const randomProductDescription = generateRandomProductDescription();\r",
+									"// Store the random product description in an environment variable\r",
+									"pm.environment.set('random_product_description', randomProductDescription);\r",
+									"\r",
+									"// Generate a random product price\r",
+									"function generateRandomProductPrice(min, max, decimalPlaces) {\r",
+									"    const price = (Math.random() * (max - min) + min).toFixed(decimalPlaces);\r",
+									"    return parseFloat(price).toFixed(decimalPlaces);\r",
+									"}\r",
+									"const minPrice = 100000.00; // Define the minimum price\r",
+									"const maxPrice = 5000000.00; // Define the maximum price\r",
+									"const decimalPlaces = 0; // Define the number of decimal places\r",
+									"const randomProductPrice = generateRandomProductPrice(minPrice, maxPrice, decimalPlaces);\r",
+									"// Store the random product price in an environment variable\r",
+									"pm.environment.set('random_product_price', randomProductPrice);\r",
+									"\r",
+									"\r",
 									""
 								],
 								"type": "text/javascript"
@@ -485,19 +661,19 @@
 							"formdata": [
 								{
 									"key": "product[name]",
-									"value": "barang 3",
+									"value": "{{random_computer_product_name}}",
 									"description": "Nama Barang",
 									"type": "text"
 								},
 								{
 									"key": "product[price]",
-									"value": "12000",
+									"value": "{{random_product_price}}",
 									"description": "Harga Barang",
 									"type": "text"
 								},
 								{
 									"key": "product[description]",
-									"value": "Ini Barang 1",
+									"value": "{{random_product_description}}",
 									"description": "Deskripsi Barang",
 									"type": "text"
 								},
@@ -552,30 +728,39 @@
 							}
 						}
 					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
 					"request": {
 						"method": "GET",
 						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "page",
+									"value": "1",
+									"type": "text"
+								},
+								{
+									"key": "category_id",
+									"value": "{{Secondhand_CategoryBarang}}",
+									"type": "text"
+								},
+								{
+									"key": "user_id",
+									"value": "{{Secondhand_UserID}}",
+									"type": "text"
+								}
+							]
+						},
 						"url": {
-							"raw": "{{secondhand}}/products.json?page=1&category_id=1&user_id=1",
+							"raw": "{{secondhand}}/products.json",
 							"host": [
 								"{{secondhand}}"
 							],
 							"path": [
 								"products.json"
-							],
-							"query": [
-								{
-									"key": "page",
-									"value": "1"
-								},
-								{
-									"key": "category_id",
-									"value": "1"
-								},
-								{
-									"key": "user_id",
-									"value": "1"
-								}
 							]
 						}
 					},
@@ -600,17 +785,24 @@
 							}
 						}
 					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
 					"request": {
 						"method": "GET",
 						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						},
 						"url": {
-							"raw": "{{secondhand}}/products/51364.json",
+							"raw": "{{secondhand}}/products/{{Secondhand_idBarang}}.json",
 							"host": [
 								"{{secondhand}}"
 							],
 							"path": [
 								"products",
-								"51364.json"
+								"{{Secondhand_idBarang}}.json"
 							]
 						}
 					},
@@ -623,12 +815,85 @@
 							"listen": "test",
 							"script": {
 								"exec": [
-									"pm.test(\"Status code is 200\", function () {\r",
-									"    pm.response.to.have.status(200);\r",
+									"pm.test(\"Successful POST request\", function () {\r",
+									"    pm.expect(pm.response.code).to.be.oneOf([201, 202]);\r",
 									"});\r",
 									"pm.test(\"Response time is less than 200ms\", function () {\r",
 									"    pm.expect(pm.response.responseTime).to.be.below(200);\r",
 									"});\r",
+									"\r",
+									"var jsonData = pm.response.json();\r",
+									"\r",
+									"pm.environment.set(\"Secondhand_idBarang\", jsonData.product.id);\r",
+									"\r",
+									"pm.environment.set(\"Secondhand_namaBarang\", jsonData.product.name);\r",
+									"\r",
+									"pm.environment.set(\"Secondhand_CategoryBarang\", jsonData.product.category_id);"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"// Define an array of random IT computer product names\r",
+									"const computerProductNames = [\r",
+									"    \"Laptop\", \"Desktop Computer\", \"Monitor\", \"Keyboard\", \"Mouse\", \"Router\", \"External Hard Drive\",\r",
+									"    \"Webcam\", \"Printer\", \"Scanner\", \"Graphics Card\", \"Motherboard\", \"CPU\", \"RAM\", \"SSD\",\r",
+									"    \"Software License\", \"Tablet\", \"Server\", \"UPS\", \"Network Switch\"\r",
+									"];\r",
+									"// Generate a random IT computer product name\r",
+									"function generateRandomComputerProductName() {\r",
+									"    const randomIndex = Math.floor(Math.random() * computerProductNames.length);\r",
+									"    return computerProductNames[randomIndex];\r",
+									"}\r",
+									"const randomComputerProductName = generateRandomComputerProductName();\r",
+									"// Store the random computer product name in an environment variable\r",
+									"pm.environment.set('random_computer_product_name', randomComputerProductName);\r",
+									"\r",
+									"// Define an array of random product descriptions\r",
+									"const productDescriptions = [\r",
+									"    \"High-performance and reliable\",\r",
+									"    \"Sleek and modern design\",\r",
+									"    \"Built to last with top-quality materials\",\r",
+									"    \"Versatile and easy to use\",\r",
+									"    \"Cutting-edge technology for superior performance\",\r",
+									"    \"Ergonomically designed for comfort\",\r",
+									"    \"Enhance your productivity with this product\",\r",
+									"    \"Experience the future of technology\",\r",
+									"    \"Affordable and feature-packed\",\r",
+									"    \"Innovative and stylish\",\r",
+									"    \"Ideal for both personal and professional use\",\r",
+									"    \"Eco-friendly and energy-efficient\",\r",
+									"    \"Seamless connectivity and compatibility\",\r",
+									"    \"Get the job done with ease\",\r",
+									"    \"Upgrade your setup with this exceptional product\",\r",
+									"    \"Stay ahead with the latest in tech\",\r",
+									"];\r",
+									"\r",
+									"// Generate a random product description\r",
+									"function generateRandomProductDescription() {\r",
+									"    const randomIndex = Math.floor(Math.random() * productDescriptions.length);\r",
+									"    return productDescriptions[randomIndex];\r",
+									"}\r",
+									"const randomProductDescription = generateRandomProductDescription();\r",
+									"// Store the random product description in an environment variable\r",
+									"pm.environment.set('random_product_description', randomProductDescription);\r",
+									"\r",
+									"// Generate a random product price\r",
+									"function generateRandomProductPrice(min, max, decimalPlaces) {\r",
+									"    const price = (Math.random() * (max - min) + min).toFixed(decimalPlaces);\r",
+									"    return parseFloat(price).toFixed(decimalPlaces);\r",
+									"}\r",
+									"const minPrice = 100000.00; // Define the minimum price\r",
+									"const maxPrice = 5000000.00; // Define the maximum price\r",
+									"const decimalPlaces = 0; // Define the number of decimal places\r",
+									"const randomProductPrice = generateRandomProductPrice(minPrice, maxPrice, decimalPlaces);\r",
+									"// Store the random product price in an environment variable\r",
+									"pm.environment.set('random_product_price', randomProductPrice);\r",
+									"\r",
+									"\r",
 									""
 								],
 								"type": "text/javascript"
@@ -643,17 +908,17 @@
 							"formdata": [
 								{
 									"key": "product[name]",
-									"value": "Coba binaraaa",
+									"value": "{{random_computer_product_name}}",
 									"type": "text"
 								},
 								{
 									"key": "product[price]",
-									"value": "10000",
+									"value": "{{random_product_price}}",
 									"type": "text"
 								},
 								{
 									"key": "product[description]",
-									"value": "coba postman",
+									"value": "{{random_product_description}}",
 									"type": "text"
 								},
 								{
@@ -679,13 +944,13 @@
 							]
 						},
 						"url": {
-							"raw": "{{secondhand}}/products/51364.json",
+							"raw": "{{secondhand}}/products/{{Secondhand_idBarang}}.json",
 							"host": [
 								"{{secondhand}}"
 							],
 							"path": [
 								"products",
-								"51364.json"
+								"{{Secondhand_idBarang}}.json"
 							]
 						}
 					},
@@ -714,13 +979,13 @@
 						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "{{secondhand}}/products/51364.json",
+							"raw": "{{secondhand}}/products/{{Secondhand_idBarang}}.json",
 							"host": [
 								"{{secondhand}}"
 							],
 							"path": [
 								"products",
-								"51364.json"
+								"{{Secondhand_idBarang}}.json"
 							]
 						}
 					},
