@@ -150,247 +150,6 @@
 			]
 		},
 		{
-			"name": "Categories",
-			"item": [
-				{
-					"name": "List Category",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"exec": [
-									"pm.test(\"Status code is 200\", function () {\r",
-									"    pm.response.to.have.status(200);\r",
-									"});\r",
-									"\r",
-									"pm.test(\"Response time is less than 200ms\", function () {\r",
-									"    pm.expect(pm.response.responseTime).to.be.below(200);\r",
-									"});\r",
-									"\r",
-									"pm.test(\"Body matches string\", function () {\r",
-									"    pm.expect(pm.response.text()).to.include(\"Hobi\");\r",
-									"});\r",
-									"pm.test(\"Body is correct\", function () {\r",
-									"    pm.response.to.have.body({\"categories\":[{\"id\":1,\"name\":\"Hobi\",\"url\":\"https://secondhand.binaracademy.org/categories/1\"},{\"id\":2,\"name\":\"Kendaraan\",\"url\":\"https://secondhand.binaracademy.org/categories/2\"},{\"id\":3,\"name\":\"Baju\",\"url\":\"https://secondhand.binaracademy.org/categories/3\"},{\"id\":4,\"name\":\"Elektronik\",\"url\":\"https://secondhand.binaracademy.org/categories/4\"},{\"id\":5,\"name\":\"Kesehatan\",\"url\":\"https://secondhand.binaracademy.org/categories/5\"}]});\r",
-									"});"
-								],
-								"type": "text/javascript"
-							}
-						}
-					],
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "{{secondhand}}/categories.json",
-							"host": [
-								"{{secondhand}}"
-							],
-							"path": [
-								"categories.json"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Get Category",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"exec": [
-									"pm.test(\"Status code is 200\", function () {\r",
-									"    pm.response.to.have.status(200);\r",
-									"});\r",
-									"\r",
-									"pm.test(\"Response time is less than 200ms\", function () {\r",
-									"    pm.expect(pm.response.responseTime).to.be.below(200);\r",
-									"});\r",
-									"\r",
-									"pm.test(\"Body matches string\", function () {\r",
-									"    pm.expect(pm.response.text()).to.include(\"Kesehatan\");\r",
-									"});\r",
-									"pm.test(\"Body is correct\", function () {\r",
-									"    pm.response.to.have.body({\"category\":{\"id\":5,\"name\":\"Kesehatan\",\"url\":\"https://secondhand.binaracademy.org/categories/5\"}});\r",
-									"});"
-								],
-								"type": "text/javascript"
-							}
-						}
-					],
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "{{secondhand}}/categories/5.json",
-							"host": [
-								"{{secondhand}}"
-							],
-							"path": [
-								"categories",
-								"5.json"
-							]
-						}
-					},
-					"response": []
-				}
-			]
-		},
-		{
-			"name": "Offers",
-			"item": [
-				{
-					"name": "List Offers",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"exec": [
-									"pm.test(\"Response time is less than 200ms\", function () {\r",
-									"    pm.expect(pm.response.responseTime).to.be.below(200);\r",
-									"});\r",
-									"pm.test(\"Status code is 200\", function () {\r",
-									"    pm.response.to.have.status(200);\r",
-									"});\r",
-									"\r",
-									"pm.test(\"Body is correct\", function () {\r",
-									"    pm.response.to.have.body({\"meta\":{\"page_next\":null,\"page_previous\":null,\"page_size\":10,\"page_count\":1,\"total\":0},\"offers\":[]});\r",
-									"});"
-								],
-								"type": "text/javascript"
-							}
-						}
-					],
-					"protocolProfileBehavior": {
-						"disableBodyPruning": true
-					},
-					"request": {
-						"method": "GET",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "{{secondhand}}/users/{{Secondhand_UserID}}/offers.json",
-							"host": [
-								"{{secondhand}}"
-							],
-							"path": [
-								"users",
-								"{{Secondhand_UserID}}",
-								"offers.json"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Update Offer",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"exec": [
-									"pm.test(\"Status code is 200\", function () {\r",
-									"    pm.response.to.have.status(200);\r",
-									"});\r",
-									"\r",
-									"pm.test(\"Response time is less than 200ms\", function () {\r",
-									"    pm.expect(pm.response.responseTime).to.be.below(200);\r",
-									"});\r",
-									"\r",
-									""
-								],
-								"type": "text/javascript"
-							}
-						}
-					],
-					"request": {
-						"method": "PUT",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n  \"offer\": {\r\n    \"status\": \"initiated\"\r\n  }\r\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "{{secondhand}}/offers/1.json",
-							"host": [
-								"{{secondhand}}"
-							],
-							"path": [
-								"offers",
-								"1.json"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Offers",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"exec": [
-									"pm.test(\"Response time is less than 200ms\", function () {\r",
-									"    pm.expect(pm.response.responseTime).to.be.below(200);\r",
-									"});\r",
-									"pm.test(\"Status code is 200\", function () {\r",
-									"    pm.response.to.have.status(200);\r",
-									"});"
-								],
-								"type": "text/javascript"
-							}
-						},
-						{
-							"listen": "prerequest",
-							"script": {
-								"exec": [
-									""
-								],
-								"type": "text/javascript"
-							}
-						}
-					],
-					"request": {
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n  \"offer\": {\r\n    \"price\": 1000,\r\n    \"to_id\": 1,\r\n    \"product_id\": {{Secondhand_idBarang}}\r\n  }\r\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "{{secondhand}}/offers.json",
-							"host": [
-								"{{secondhand}}"
-							],
-							"path": [
-								"offers.json"
-							]
-						}
-					},
-					"response": []
-				}
-			]
-		},
-		{
 			"name": "Profile",
 			"item": [
 				{
@@ -551,6 +310,94 @@
 							],
 							"path": [
 								"profiles.json"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Categories",
+			"item": [
+				{
+					"name": "List Category",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response time is less than 200ms\", function () {\r",
+									"    pm.expect(pm.response.responseTime).to.be.below(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Body matches string\", function () {\r",
+									"    pm.expect(pm.response.text()).to.include(\"Hobi\");\r",
+									"});\r",
+									"pm.test(\"Body is correct\", function () {\r",
+									"    pm.response.to.have.body({\"categories\":[{\"id\":1,\"name\":\"Hobi\",\"url\":\"https://secondhand.binaracademy.org/categories/1\"},{\"id\":2,\"name\":\"Kendaraan\",\"url\":\"https://secondhand.binaracademy.org/categories/2\"},{\"id\":3,\"name\":\"Baju\",\"url\":\"https://secondhand.binaracademy.org/categories/3\"},{\"id\":4,\"name\":\"Elektronik\",\"url\":\"https://secondhand.binaracademy.org/categories/4\"},{\"id\":5,\"name\":\"Kesehatan\",\"url\":\"https://secondhand.binaracademy.org/categories/5\"}]});\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{secondhand}}/categories.json",
+							"host": [
+								"{{secondhand}}"
+							],
+							"path": [
+								"categories.json"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Category",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response time is less than 200ms\", function () {\r",
+									"    pm.expect(pm.response.responseTime).to.be.below(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Body matches string\", function () {\r",
+									"    pm.expect(pm.response.text()).to.include(\"Kesehatan\");\r",
+									"});\r",
+									"pm.test(\"Body is correct\", function () {\r",
+									"    pm.response.to.have.body({\"category\":{\"id\":5,\"name\":\"Kesehatan\",\"url\":\"https://secondhand.binaracademy.org/categories/5\"}});\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{secondhand}}/categories/5.json",
+							"host": [
+								"{{secondhand}}"
+							],
+							"path": [
+								"categories",
+								"5.json"
 							]
 						}
 					},
@@ -986,6 +833,159 @@
 							"path": [
 								"products",
 								"{{Secondhand_idBarang}}.json"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Offers",
+			"item": [
+				{
+					"name": "List Offers",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Response time is less than 200ms\", function () {\r",
+									"    pm.expect(pm.response.responseTime).to.be.below(200);\r",
+									"});\r",
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Body is correct\", function () {\r",
+									"    pm.response.to.have.body({\"meta\":{\"page_next\":null,\"page_previous\":null,\"page_size\":10,\"page_count\":1,\"total\":0},\"offers\":[]});\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{secondhand}}/users/{{Secondhand_UserID}}/offers.json",
+							"host": [
+								"{{secondhand}}"
+							],
+							"path": [
+								"users",
+								"{{Secondhand_UserID}}",
+								"offers.json"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Offer",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response time is less than 200ms\", function () {\r",
+									"    pm.expect(pm.response.responseTime).to.be.below(200);\r",
+									"});\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"offer\": {\r\n    \"status\": \"initiated\"\r\n  }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{secondhand}}/offers/1.json",
+							"host": [
+								"{{secondhand}}"
+							],
+							"path": [
+								"offers",
+								"1.json"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Offers",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Response time is less than 200ms\", function () {\r",
+									"    pm.expect(pm.response.responseTime).to.be.below(200);\r",
+									"});\r",
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"offer\": {\r\n    \"price\": 1000,\r\n    \"to_id\": 1,\r\n    \"product_id\": {{Secondhand_idBarang}}\r\n  }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{secondhand}}/offers.json",
+							"host": [
+								"{{secondhand}}"
+							],
+							"path": [
+								"offers.json"
 							]
 						}
 					},
