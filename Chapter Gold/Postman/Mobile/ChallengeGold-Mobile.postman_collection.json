@@ -1,0 +1,3026 @@
+{
+	"info": {
+		"_postman_id": "b2c0d1d7-742b-4ab8-8af7-9e4ef0caca66",
+		"name": "ChallengeGold-Mobile",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "22413622",
+		"_collection_link": "https://www.postman.com/winter-zodiac-867140/workspace/qae15-yantrisnandra-akbar-maulino/collection/22413622-b2c0d1d7-742b-4ab8-8af7-9e4ef0caca66?action=share&source=collection_link&creator=22413622"
+	},
+	"item": [
+		{
+			"name": "Auth Seller",
+			"item": [
+				{
+					"name": "Auth Regristration",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"// Generate a random name\r",
+									"function generateRandomName() {\r",
+									"    const firstNames = [\"John\", \"Alice\", \"Bob\", \"Emma\", \"David\",\"Jhony\"]; // Add more first names as needed\r",
+									"    const lastNames = [\"Smith\", \"Johnson\", \"Doe\", \"Brown\", \"Wilson\"]; // Add more last names as needed\r",
+									"    const randomFirstName = firstNames[Math.floor(Math.random() * firstNames.length)];\r",
+									"    const randomLastName = lastNames[Math.floor(Math.random() * lastNames.length)];\r",
+									"    return `${randomFirstName} ${randomLastName}`;\r",
+									"}\r",
+									"const randomName = generateRandomName();\r",
+									"// Store the random name in an environment variable\r",
+									"pm.environment.set('random_name', randomName);\r",
+									"\r",
+									"\r",
+									"// Generate a random email address\r",
+									"function generateRandomEmail() {\r",
+									"    const username = Math.random().toString(36).substring(2, 12); // Generate a random username\r",
+									"    const domain = 'google.com'; // Replace 'example.com' with your desired domain\r",
+									"    return `${username}@${domain}`;\r",
+									"}\r",
+									"const randomEmail = generateRandomEmail();\r",
+									"// Store the random email in an environment variable\r",
+									"pm.environment.set('random_email', randomEmail);\r",
+									"// Generate a random-looking Indonesian phone number\r",
+									"function generateRandomIndonesianPhoneNumber() {\r",
+									"    const prefixOptions = [\"0811\", \"0812\", \"0813\", \"0821\", \"0822\", \"0823\", \"0851\", \"0852\", \"0853\", \"0814\", \"0815\", \"0816\", \"0855\"];\r",
+									"    const selectedPrefix = prefixOptions[Math.floor(Math.random() * prefixOptions.length)];\r",
+									"    const remainingDigits = Math.floor(Math.random() * 1000000000).toString().padStart(9, '0');\r",
+									"    return selectedPrefix + remainingDigits;\r",
+									"}\r",
+									"const randomIndonesianPhoneNumber = generateRandomIndonesianPhoneNumber();\r",
+									"// Store the random Indonesian phone number in an environment variable\r",
+									"pm.environment.set('random_indonesian_phone_number', randomIndonesianPhoneNumber);\r",
+									"\r",
+									"// Generate a random-looking Indonesian address\r",
+									"function generateRandomIndonesianAddress() {\r",
+									"    const streets = [\"Jalan Merdeka\", \"Jalan Pahlawan\", \"Jalan Raya\", \"Jalan Cendrawasih\", \"Jalan Budi Utomo\", \"Jalan Diponegoro\"];\r",
+									"    const cities = [\"Jakarta\", \"Surabaya\", \"Bandung\", \"Yogyakarta\", \"Medan\", \"Semarang\"];\r",
+									"    const provinces = [\"Jakarta\", \"East Java\", \"West Java\", \"Yogyakarta\", \"North Sumatra\", \"Central Java\"];\r",
+									"    \r",
+									"    const randomStreet = streets[Math.floor(Math.random() * streets.length)];\r",
+									"    const randomCity = cities[Math.floor(Math.random() * cities.length)];\r",
+									"    const randomProvince = provinces[Math.floor(Math.random() * provinces.length)];\r",
+									"    \r",
+									"    return `${randomStreet}, ${randomCity}, ${randomProvince}`;\r",
+									"}\r",
+									"const randomIndonesianAddress = generateRandomIndonesianAddress();\r",
+									"// Store the random Indonesian address in an environment variable\r",
+									"pm.environment.set('random_indonesian_address', randomIndonesianAddress);\r",
+									"// Extract the city from the generated address\r",
+									"const city = randomIndonesianAddress.split(', ')[1];\r",
+									"// Store the extracted city in an environment variable\r",
+									"pm.environment.set('random_indonesian_city', city);\r",
+									"\r",
+									"pm.environment.set('Password', \"123456\");"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 201\", function () {\r",
+									"    pm.response.to.have.status(201);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response time is less than 2000ms\", function () {\r",
+									"    pm.expect(pm.response.responseTime).to.be.below(2000);\r",
+									"});\r",
+									"\r",
+									"var jsonData = pm.response.json();\r",
+									"\r",
+									"pm.environment.set(\"SecondhandMobile_Email_Seller\", jsonData.email);\r",
+									"\r",
+									"pm.environment.set(\"SecondhandMobile_UserID_Seller\", jsonData.id);\r",
+									"\r",
+									"pm.environment.set(\"SecondhandMobile_FullName_Seller\", jsonData.full_name);\r",
+									"\r",
+									"\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "full_name",
+									"value": "{{random_name}}",
+									"type": "text"
+								},
+								{
+									"key": "email",
+									"value": "{{random_email}}",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "{{Password}}",
+									"type": "text"
+								},
+								{
+									"key": "phone_number",
+									"value": "{{random_indonesian_phone_number}}",
+									"type": "text"
+								},
+								{
+									"key": "address",
+									"value": "{{random_indonesian_address}}",
+									"type": "text"
+								},
+								{
+									"key": "image",
+									"type": "file",
+									"src": []
+								},
+								{
+									"key": "city",
+									"value": "{{random_indonesian_city}}",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{secondhand_mobile}}/auth/register",
+							"host": [
+								"{{secondhand_mobile}}"
+							],
+							"path": [
+								"auth",
+								"register"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Auth Login",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 201\", function () {\r",
+									"    pm.response.to.have.status(201);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response time is less than 2000ms\", function () {\r",
+									"    pm.expect(pm.response.responseTime).to.be.below(2000);\r",
+									"});\r",
+									"\r",
+									"var jsonData = pm.response.json();\r",
+									"\r",
+									"pm.environment.set(\"SecondhandMobile_AccessToken_Seller\", jsonData.access_token);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"email\": \"{{SecondhandMobile_Email_Seller}}\" ,\r\n  \"password\": \"{{Password}}\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{secondhand_mobile}}/auth/login",
+							"host": [
+								"{{secondhand_mobile}}"
+							],
+							"path": [
+								"auth",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Auth User",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response time is less than 2000ms\", function () {\r",
+									"    pm.expect(pm.response.responseTime).to.be.below(2000);\r",
+									"});\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "access_token",
+								"value": "{{SecondhandMobile_AccessToken_Seller}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						},
+						"url": {
+							"raw": "{{secondhand_mobile}}/auth/user",
+							"host": [
+								"{{secondhand_mobile}}"
+							],
+							"path": [
+								"auth",
+								"user"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Auth Change Password",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"\r",
+									"\r",
+									"pm.environment.set('Password', \"123456\");\r",
+									"\r",
+									"pm.environment.set('New_Password', \"1234567\");"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response time is less than 2000ms\", function () {\r",
+									"    pm.expect(pm.response.responseTime).to.be.below(2000);\r",
+									"});\r",
+									"\r",
+									"\r",
+									"\r",
+									"\r",
+									"\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "access_token",
+								"value": "{{SecondhandMobile_AccessToken_Seller}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "current_password",
+									"value": "{{Password}}",
+									"type": "text"
+								},
+								{
+									"key": "new_password",
+									"value": "{{New_Password}}",
+									"type": "text"
+								},
+								{
+									"key": "confirm_password",
+									"value": "{{New_Password}}",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{secondhand_mobile}}/auth/change-password",
+							"host": [
+								"{{secondhand_mobile}}"
+							],
+							"path": [
+								"auth",
+								"change-password"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Auth Buyer",
+			"item": [
+				{
+					"name": "Auth Regristration",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"// Generate a random name\r",
+									"function generateRandomName() {\r",
+									"    const firstNames = [\"John\", \"Alice\", \"Bob\", \"Emma\", \"David\",\"Jhony\"]; // Add more first names as needed\r",
+									"    const lastNames = [\"Smith\", \"Johnson\", \"Doe\", \"Brown\", \"Wilson\"]; // Add more last names as needed\r",
+									"    const randomFirstName = firstNames[Math.floor(Math.random() * firstNames.length)];\r",
+									"    const randomLastName = lastNames[Math.floor(Math.random() * lastNames.length)];\r",
+									"    return `${randomFirstName} ${randomLastName}`;\r",
+									"}\r",
+									"const randomName = generateRandomName();\r",
+									"// Store the random name in an environment variable\r",
+									"pm.environment.set('random_name', randomName);\r",
+									"\r",
+									"\r",
+									"// Generate a random email address\r",
+									"function generateRandomEmail() {\r",
+									"    const username = Math.random().toString(36).substring(2, 12); // Generate a random username\r",
+									"    const domain = 'google.com'; // Replace 'example.com' with your desired domain\r",
+									"    return `${username}@${domain}`;\r",
+									"}\r",
+									"const randomEmail = generateRandomEmail();\r",
+									"// Store the random email in an environment variable\r",
+									"pm.environment.set('random_email', randomEmail);\r",
+									"// Generate a random-looking Indonesian phone number\r",
+									"function generateRandomIndonesianPhoneNumber() {\r",
+									"    const prefixOptions = [\"0811\", \"0812\", \"0813\", \"0821\", \"0822\", \"0823\", \"0851\", \"0852\", \"0853\", \"0814\", \"0815\", \"0816\", \"0855\"];\r",
+									"    const selectedPrefix = prefixOptions[Math.floor(Math.random() * prefixOptions.length)];\r",
+									"    const remainingDigits = Math.floor(Math.random() * 1000000000).toString().padStart(9, '0');\r",
+									"    return selectedPrefix + remainingDigits;\r",
+									"}\r",
+									"const randomIndonesianPhoneNumber = generateRandomIndonesianPhoneNumber();\r",
+									"// Store the random Indonesian phone number in an environment variable\r",
+									"pm.environment.set('random_indonesian_phone_number', randomIndonesianPhoneNumber);\r",
+									"\r",
+									"// Generate a random-looking Indonesian address\r",
+									"function generateRandomIndonesianAddress() {\r",
+									"    const streets = [\"Jalan Merdeka\", \"Jalan Pahlawan\", \"Jalan Raya\", \"Jalan Cendrawasih\", \"Jalan Budi Utomo\", \"Jalan Diponegoro\"];\r",
+									"    const cities = [\"Jakarta\", \"Surabaya\", \"Bandung\", \"Yogyakarta\", \"Medan\", \"Semarang\"];\r",
+									"    const provinces = [\"Jakarta\", \"East Java\", \"West Java\", \"Yogyakarta\", \"North Sumatra\", \"Central Java\"];\r",
+									"    \r",
+									"    const randomStreet = streets[Math.floor(Math.random() * streets.length)];\r",
+									"    const randomCity = cities[Math.floor(Math.random() * cities.length)];\r",
+									"    const randomProvince = provinces[Math.floor(Math.random() * provinces.length)];\r",
+									"    \r",
+									"    return `${randomStreet}, ${randomCity}, ${randomProvince}`;\r",
+									"}\r",
+									"const randomIndonesianAddress = generateRandomIndonesianAddress();\r",
+									"// Store the random Indonesian address in an environment variable\r",
+									"pm.environment.set('random_indonesian_address', randomIndonesianAddress);\r",
+									"// Extract the city from the generated address\r",
+									"const city = randomIndonesianAddress.split(', ')[1];\r",
+									"// Store the extracted city in an environment variable\r",
+									"pm.environment.set('random_indonesian_city', city);\r",
+									"\r",
+									"pm.environment.set('Password', \"123456\");"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 201\", function () {\r",
+									"    pm.response.to.have.status(201);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response time is less than 2000ms\", function () {\r",
+									"    pm.expect(pm.response.responseTime).to.be.below(2000);\r",
+									"});\r",
+									"\r",
+									"var jsonData = pm.response.json();\r",
+									"\r",
+									"pm.environment.set(\"SecondhandMobile_Email_Buyer\", jsonData.email);\r",
+									"\r",
+									"pm.environment.set(\"SecondhandMobile_UserID_Buyer\", jsonData.id);\r",
+									"\r",
+									"pm.environment.set(\"SecondhandMobile_FullName_Buyer\", jsonData.full_name);\r",
+									"\r",
+									"\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "full_name",
+									"value": "{{random_name}}",
+									"type": "text"
+								},
+								{
+									"key": "email",
+									"value": "{{random_email}}",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "{{Password}}",
+									"type": "text"
+								},
+								{
+									"key": "phone_number",
+									"value": "{{random_indonesian_phone_number}}",
+									"type": "text"
+								},
+								{
+									"key": "address",
+									"value": "{{random_indonesian_address}}",
+									"type": "text"
+								},
+								{
+									"key": "image",
+									"type": "file",
+									"src": []
+								},
+								{
+									"key": "city",
+									"value": "{{random_indonesian_city}}",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{secondhand_mobile}}/auth/register",
+							"host": [
+								"{{secondhand_mobile}}"
+							],
+							"path": [
+								"auth",
+								"register"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Auth Login",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 201\", function () {\r",
+									"    pm.response.to.have.status(201);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response time is less than 2000ms\", function () {\r",
+									"    pm.expect(pm.response.responseTime).to.be.below(2000);\r",
+									"});\r",
+									"\r",
+									"var jsonData = pm.response.json();\r",
+									"\r",
+									"pm.environment.set(\"SecondhandMobile_AccessToken_Buyer\", jsonData.access_token);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"email\": \"{{SecondhandMobile_Email_Buyer}}\" ,\r\n  \"password\": \"{{Password}}\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{secondhand_mobile}}/auth/login",
+							"host": [
+								"{{secondhand_mobile}}"
+							],
+							"path": [
+								"auth",
+								"login"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Seller - Product",
+			"item": [
+				{
+					"name": "Seller-Product",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"// Define an array of random IT computer product names\r",
+									"const computerProductNames = [\r",
+									"    \"Laptop\", \"Desktop Computer\", \"Monitor\", \"Keyboard\", \"Mouse\", \"Router\", \"External Hard Drive\",\r",
+									"    \"Webcam\", \"Printer\", \"Scanner\", \"Graphics Card\", \"Motherboard\", \"CPU\", \"RAM\", \"SSD\",\r",
+									"    \"Software License\", \"Tablet\", \"Server\", \"UPS\", \"Network Switch\"\r",
+									"];\r",
+									"// Generate a random IT computer product name\r",
+									"function generateRandomComputerProductName() {\r",
+									"    const randomIndex = Math.floor(Math.random() * computerProductNames.length);\r",
+									"    return computerProductNames[randomIndex];\r",
+									"}\r",
+									"const randomComputerProductName = generateRandomComputerProductName();\r",
+									"// Store the random computer product name in an environment variable\r",
+									"pm.environment.set('random_computer_product_name', randomComputerProductName);\r",
+									"\r",
+									"// Define an array of random product descriptions\r",
+									"const productDescriptions = [\r",
+									"    \"High-performance and reliable\",\r",
+									"    \"Sleek and modern design\",\r",
+									"    \"Built to last with top-quality materials\",\r",
+									"    \"Versatile and easy to use\",\r",
+									"    \"Cutting-edge technology for superior performance\",\r",
+									"    \"Ergonomically designed for comfort\",\r",
+									"    \"Enhance your productivity with this product\",\r",
+									"    \"Experience the future of technology\",\r",
+									"    \"Affordable and feature-packed\",\r",
+									"    \"Innovative and stylish\",\r",
+									"    \"Ideal for both personal and professional use\",\r",
+									"    \"Eco-friendly and energy-efficient\",\r",
+									"    \"Seamless connectivity and compatibility\",\r",
+									"    \"Get the job done with ease\",\r",
+									"    \"Upgrade your setup with this exceptional product\",\r",
+									"    \"Stay ahead with the latest in tech\",\r",
+									"];\r",
+									"\r",
+									"// Generate a random product description\r",
+									"function generateRandomProductDescription() {\r",
+									"    const randomIndex = Math.floor(Math.random() * productDescriptions.length);\r",
+									"    return productDescriptions[randomIndex];\r",
+									"}\r",
+									"const randomProductDescription = generateRandomProductDescription();\r",
+									"// Store the random product description in an environment variable\r",
+									"pm.environment.set('random_product_description', randomProductDescription);\r",
+									"\r",
+									"// Generate a random product price\r",
+									"function generateRandomProductPrice(min, max, decimalPlaces) {\r",
+									"    const price = (Math.random() * (max - min) + min).toFixed(decimalPlaces);\r",
+									"    return parseFloat(price).toFixed(decimalPlaces);\r",
+									"}\r",
+									"const minPrice = 100000.00; // Define the minimum price\r",
+									"const maxPrice = 5000000.00; // Define the maximum price\r",
+									"const decimalPlaces = 0; // Define the number of decimal places\r",
+									"const randomProductPrice = generateRandomProductPrice(minPrice, maxPrice, decimalPlaces);\r",
+									"// Store the random product price in an environment variable\r",
+									"pm.environment.set('random_product_price', randomProductPrice);\r",
+									"\r",
+									"// Generate a random-looking Indonesian address\r",
+									"function generateRandomIndonesianAddress() {\r",
+									"    const streets = [\"Jalan Merdeka\", \"Jalan Pahlawan\", \"Jalan Raya\", \"Jalan Cendrawasih\", \"Jalan Budi Utomo\", \"Jalan Diponegoro\"];\r",
+									"    const cities = [\"Jakarta\", \"Surabaya\", \"Bandung\", \"Yogyakarta\", \"Medan\", \"Semarang\"];\r",
+									"    const provinces = [\"Jakarta\", \"East Java\", \"West Java\", \"Yogyakarta\", \"North Sumatra\", \"Central Java\"];\r",
+									"    \r",
+									"    const randomStreet = streets[Math.floor(Math.random() * streets.length)];\r",
+									"    const randomCity = cities[Math.floor(Math.random() * cities.length)];\r",
+									"    const randomProvince = provinces[Math.floor(Math.random() * provinces.length)];\r",
+									"    \r",
+									"    return `${randomStreet}, ${randomCity}, ${randomProvince}`;\r",
+									"}\r",
+									"const randomIndonesianAddress = generateRandomIndonesianAddress();\r",
+									"// Store the random Indonesian address in an environment variable\r",
+									"pm.environment.set('random_indonesian_address', randomIndonesianAddress);\r",
+									"// Extract the city from the generated address\r",
+									"const city = randomIndonesianAddress.split(', ')[1];\r",
+									"// Store the extracted city in an environment variable\r",
+									"pm.environment.set('random_indonesian_city', city);\r",
+									"\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 201\", function () {\r",
+									"    pm.response.to.have.status(201);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response time is less than 2000ms\", function () {\r",
+									"    pm.expect(pm.response.responseTime).to.be.below(2000);\r",
+									"});\r",
+									"var jsonData = pm.response.json();\r",
+									"\r",
+									"pm.environment.set(\"SecondhandMobile_idBarang\", jsonData.id);\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "access_token",
+								"value": "{{SecondhandMobile_AccessToken_Seller}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "name",
+									"value": "{{random_computer_product_name}}",
+									"type": "text"
+								},
+								{
+									"key": "description",
+									"value": "{{random_product_description}}",
+									"type": "text"
+								},
+								{
+									"key": "base_price",
+									"value": "{{random_product_price}}",
+									"type": "text"
+								},
+								{
+									"key": "category_ids",
+									"value": "1",
+									"type": "text"
+								},
+								{
+									"key": "location",
+									"value": "{{random_indonesian_city}}",
+									"type": "text"
+								},
+								{
+									"key": "image",
+									"type": "file",
+									"src": "/C:/Users/ASUS/Downloads/1.png"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{secondhand_mobile}}/seller/product",
+							"host": [
+								"{{secondhand_mobile}}"
+							],
+							"path": [
+								"seller",
+								"product"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Seller-Product",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response time is less than 2000ms\", function () {\r",
+									"    pm.expect(pm.response.responseTime).to.be.below(2000);\r",
+									"});\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "access_token",
+								"value": "{{SecondhandMobile_AccessToken_Seller}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						},
+						"url": {
+							"raw": "{{secondhand_mobile}}/seller/product",
+							"host": [
+								"{{secondhand_mobile}}"
+							],
+							"path": [
+								"seller",
+								"product"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Seller-Product-ID",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response time is less than 2000ms\", function () {\r",
+									"    pm.expect(pm.response.responseTime).to.be.below(2000);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "access_token",
+								"value": "{{SecondhandMobile_AccessToken_Seller}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						},
+						"url": {
+							"raw": "{{secondhand_mobile}}/seller/product/{{SecondhandMobile_idBarang}}",
+							"host": [
+								"{{secondhand_mobile}}"
+							],
+							"path": [
+								"seller",
+								"product",
+								"{{SecondhandMobile_idBarang}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Seller-Product-ID",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"// Define an array of random IT computer product names\r",
+									"const computerProductNames = [\r",
+									"    \"Laptop\", \"Desktop Computer\", \"Monitor\", \"Keyboard\", \"Mouse\", \"Router\", \"External Hard Drive\",\r",
+									"    \"Webcam\", \"Printer\", \"Scanner\", \"Graphics Card\", \"Motherboard\", \"CPU\", \"RAM\", \"SSD\",\r",
+									"    \"Software License\", \"Tablet\", \"Server\", \"UPS\", \"Network Switch\"\r",
+									"];\r",
+									"// Generate a random IT computer product name\r",
+									"function generateRandomComputerProductName() {\r",
+									"    const randomIndex = Math.floor(Math.random() * computerProductNames.length);\r",
+									"    return computerProductNames[randomIndex];\r",
+									"}\r",
+									"const randomComputerProductName = generateRandomComputerProductName();\r",
+									"// Store the random computer product name in an environment variable\r",
+									"pm.environment.set('random_computer_product_name', randomComputerProductName);\r",
+									"\r",
+									"// Define an array of random product descriptions\r",
+									"const productDescriptions = [\r",
+									"    \"High-performance and reliable\",\r",
+									"    \"Sleek and modern design\",\r",
+									"    \"Built to last with top-quality materials\",\r",
+									"    \"Versatile and easy to use\",\r",
+									"    \"Cutting-edge technology for superior performance\",\r",
+									"    \"Ergonomically designed for comfort\",\r",
+									"    \"Enhance your productivity with this product\",\r",
+									"    \"Experience the future of technology\",\r",
+									"    \"Affordable and feature-packed\",\r",
+									"    \"Innovative and stylish\",\r",
+									"    \"Ideal for both personal and professional use\",\r",
+									"    \"Eco-friendly and energy-efficient\",\r",
+									"    \"Seamless connectivity and compatibility\",\r",
+									"    \"Get the job done with ease\",\r",
+									"    \"Upgrade your setup with this exceptional product\",\r",
+									"    \"Stay ahead with the latest in tech\",\r",
+									"];\r",
+									"\r",
+									"// Generate a random product description\r",
+									"function generateRandomProductDescription() {\r",
+									"    const randomIndex = Math.floor(Math.random() * productDescriptions.length);\r",
+									"    return productDescriptions[randomIndex];\r",
+									"}\r",
+									"const randomProductDescription = generateRandomProductDescription();\r",
+									"// Store the random product description in an environment variable\r",
+									"pm.environment.set('random_product_description', randomProductDescription);\r",
+									"\r",
+									"// Generate a random product price\r",
+									"function generateRandomProductPrice(min, max, decimalPlaces) {\r",
+									"    const price = (Math.random() * (max - min) + min).toFixed(decimalPlaces);\r",
+									"    return parseFloat(price).toFixed(decimalPlaces);\r",
+									"}\r",
+									"const minPrice = 100000.00; // Define the minimum price\r",
+									"const maxPrice = 5000000.00; // Define the maximum price\r",
+									"const decimalPlaces = 0; // Define the number of decimal places\r",
+									"const randomProductPrice = generateRandomProductPrice(minPrice, maxPrice, decimalPlaces);\r",
+									"// Store the random product price in an environment variable\r",
+									"pm.environment.set('random_product_price', randomProductPrice);\r",
+									"\r",
+									"// Generate a random-looking Indonesian address\r",
+									"function generateRandomIndonesianAddress() {\r",
+									"    const streets = [\"Jalan Merdeka\", \"Jalan Pahlawan\", \"Jalan Raya\", \"Jalan Cendrawasih\", \"Jalan Budi Utomo\", \"Jalan Diponegoro\"];\r",
+									"    const cities = [\"Jakarta\", \"Surabaya\", \"Bandung\", \"Yogyakarta\", \"Medan\", \"Semarang\"];\r",
+									"    const provinces = [\"Jakarta\", \"East Java\", \"West Java\", \"Yogyakarta\", \"North Sumatra\", \"Central Java\"];\r",
+									"    \r",
+									"    const randomStreet = streets[Math.floor(Math.random() * streets.length)];\r",
+									"    const randomCity = cities[Math.floor(Math.random() * cities.length)];\r",
+									"    const randomProvince = provinces[Math.floor(Math.random() * provinces.length)];\r",
+									"    \r",
+									"    return `${randomStreet}, ${randomCity}, ${randomProvince}`;\r",
+									"}\r",
+									"const randomIndonesianAddress = generateRandomIndonesianAddress();\r",
+									"// Store the random Indonesian address in an environment variable\r",
+									"pm.environment.set('random_indonesian_address', randomIndonesianAddress);\r",
+									"// Extract the city from the generated address\r",
+									"const city = randomIndonesianAddress.split(', ')[1];\r",
+									"// Store the extracted city in an environment variable\r",
+									"pm.environment.set('random_indonesian_city', city);\r",
+									"\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response time is less than 2000ms\", function () {\r",
+									"    pm.expect(pm.response.responseTime).to.be.below(2000);\r",
+									"});\r",
+									"var jsonData = pm.response.json();\r",
+									"\r",
+									"pm.environment.set(\"SecondhandMobile_idBarang\", jsonData.id);\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "access_token",
+								"value": "{{SecondhandMobile_AccessToken_Seller}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "name",
+									"value": "{{random_computer_product_name}}",
+									"type": "text"
+								},
+								{
+									"key": "description",
+									"value": "{{random_product_description}}",
+									"type": "text"
+								},
+								{
+									"key": "base_price",
+									"value": "{{random_product_price}}",
+									"type": "text"
+								},
+								{
+									"key": "category_ids",
+									"value": "1",
+									"type": "text"
+								},
+								{
+									"key": "location",
+									"value": "{{random_indonesian_city}}",
+									"type": "text"
+								},
+								{
+									"key": "image",
+									"type": "file",
+									"src": "/C:/Users/User/Downloads/1.jpg"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{secondhand_mobile}}/seller/product/{{SecondhandMobile_idBarang}}",
+							"host": [
+								"{{secondhand_mobile}}"
+							],
+							"path": [
+								"seller",
+								"product",
+								"{{SecondhandMobile_idBarang}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Seller-Product-ID",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"// Define an array of random IT computer product names\r",
+									"const computerProductNames = [\r",
+									"    \"Laptop\", \"Desktop Computer\", \"Monitor\", \"Keyboard\", \"Mouse\", \"Router\", \"External Hard Drive\",\r",
+									"    \"Webcam\", \"Printer\", \"Scanner\", \"Graphics Card\", \"Motherboard\", \"CPU\", \"RAM\", \"SSD\",\r",
+									"    \"Software License\", \"Tablet\", \"Server\", \"UPS\", \"Network Switch\"\r",
+									"];\r",
+									"// Generate a random IT computer product name\r",
+									"function generateRandomComputerProductName() {\r",
+									"    const randomIndex = Math.floor(Math.random() * computerProductNames.length);\r",
+									"    return computerProductNames[randomIndex];\r",
+									"}\r",
+									"const randomComputerProductName = generateRandomComputerProductName();\r",
+									"// Store the random computer product name in an environment variable\r",
+									"pm.environment.set('random_computer_product_name', randomComputerProductName);\r",
+									"\r",
+									"// Define an array of random product descriptions\r",
+									"const productDescriptions = [\r",
+									"    \"High-performance and reliable\",\r",
+									"    \"Sleek and modern design\",\r",
+									"    \"Built to last with top-quality materials\",\r",
+									"    \"Versatile and easy to use\",\r",
+									"    \"Cutting-edge technology for superior performance\",\r",
+									"    \"Ergonomically designed for comfort\",\r",
+									"    \"Enhance your productivity with this product\",\r",
+									"    \"Experience the future of technology\",\r",
+									"    \"Affordable and feature-packed\",\r",
+									"    \"Innovative and stylish\",\r",
+									"    \"Ideal for both personal and professional use\",\r",
+									"    \"Eco-friendly and energy-efficient\",\r",
+									"    \"Seamless connectivity and compatibility\",\r",
+									"    \"Get the job done with ease\",\r",
+									"    \"Upgrade your setup with this exceptional product\",\r",
+									"    \"Stay ahead with the latest in tech\",\r",
+									"];\r",
+									"\r",
+									"// Generate a random product description\r",
+									"function generateRandomProductDescription() {\r",
+									"    const randomIndex = Math.floor(Math.random() * productDescriptions.length);\r",
+									"    return productDescriptions[randomIndex];\r",
+									"}\r",
+									"const randomProductDescription = generateRandomProductDescription();\r",
+									"// Store the random product description in an environment variable\r",
+									"pm.environment.set('random_product_description', randomProductDescription);\r",
+									"\r",
+									"// Generate a random product price\r",
+									"function generateRandomProductPrice(min, max, decimalPlaces) {\r",
+									"    const price = (Math.random() * (max - min) + min).toFixed(decimalPlaces);\r",
+									"    return parseFloat(price).toFixed(decimalPlaces);\r",
+									"}\r",
+									"const minPrice = 100000.00; // Define the minimum price\r",
+									"const maxPrice = 5000000.00; // Define the maximum price\r",
+									"const decimalPlaces = 0; // Define the number of decimal places\r",
+									"const randomProductPrice = generateRandomProductPrice(minPrice, maxPrice, decimalPlaces);\r",
+									"// Store the random product price in an environment variable\r",
+									"pm.environment.set('random_product_price', randomProductPrice);\r",
+									"\r",
+									"// Generate a random-looking Indonesian address\r",
+									"function generateRandomIndonesianAddress() {\r",
+									"    const streets = [\"Jalan Merdeka\", \"Jalan Pahlawan\", \"Jalan Raya\", \"Jalan Cendrawasih\", \"Jalan Budi Utomo\", \"Jalan Diponegoro\"];\r",
+									"    const cities = [\"Jakarta\", \"Surabaya\", \"Bandung\", \"Yogyakarta\", \"Medan\", \"Semarang\"];\r",
+									"    const provinces = [\"Jakarta\", \"East Java\", \"West Java\", \"Yogyakarta\", \"North Sumatra\", \"Central Java\"];\r",
+									"    \r",
+									"    const randomStreet = streets[Math.floor(Math.random() * streets.length)];\r",
+									"    const randomCity = cities[Math.floor(Math.random() * cities.length)];\r",
+									"    const randomProvince = provinces[Math.floor(Math.random() * provinces.length)];\r",
+									"    \r",
+									"    return `${randomStreet}, ${randomCity}, ${randomProvince}`;\r",
+									"}\r",
+									"const randomIndonesianAddress = generateRandomIndonesianAddress();\r",
+									"// Store the random Indonesian address in an environment variable\r",
+									"pm.environment.set('random_indonesian_address', randomIndonesianAddress);\r",
+									"// Extract the city from the generated address\r",
+									"const city = randomIndonesianAddress.split(', ')[1];\r",
+									"// Store the extracted city in an environment variable\r",
+									"pm.environment.set('random_indonesian_city', city);\r",
+									"\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"\r",
+									"\r",
+									"pm.test(\"Response time is less than 2000ms\", function () {\r",
+									"    pm.expect(pm.response.responseTime).to.be.below(2000);\r",
+									"});\r",
+									"\r",
+									"\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "access_token",
+								"value": "{{SecondhandMobile_AccessToken_Seller}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "status",
+									"value": "available",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{secondhand_mobile}}/seller/product//{{SecondhandMobile_idBarang}}",
+							"host": [
+								"{{secondhand_mobile}}"
+							],
+							"path": [
+								"seller",
+								"product",
+								"",
+								"{{SecondhandMobile_idBarang}}"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Buyer Order",
+			"item": [
+				{
+					"name": "Buyer - Order",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 201\", function () {\r",
+									"    pm.response.to.have.status(201);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response time is less than 2000ms\", function () {\r",
+									"    pm.expect(pm.response.responseTime).to.be.below(2000);\r",
+									"});\r",
+									"\r",
+									"var jsonData = pm.response.json();\r",
+									"\r",
+									"pm.environment.set(\"SecondhandMobile_ID_Buyer_Order\", jsonData.id);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "access_token",
+								"value": "{{SecondhandMobile_AccessToken_Buyer}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"product_id\": {{SecondhandMobile_idBarang}},\r\n  \"bid_price\": 1000000\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{secondhand_mobile}}/buyer/order",
+							"host": [
+								"{{secondhand_mobile}}"
+							],
+							"path": [
+								"buyer",
+								"order"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Buyer - Order",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response time is less than 2000ms\", function () {\r",
+									"    pm.expect(pm.response.responseTime).to.be.below(2000);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "access_token",
+								"value": "{{SecondhandMobile_AccessToken_Buyer}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{secondhand_mobile}}/buyer/order",
+							"host": [
+								"{{secondhand_mobile}}"
+							],
+							"path": [
+								"buyer",
+								"order"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Buyer - Order -ID",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response time is less than 2000ms\", function () {\r",
+									"    pm.expect(pm.response.responseTime).to.be.below(2000);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "access_token",
+								"value": "{{SecondhandMobile_AccessToken_Buyer}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						},
+						"url": {
+							"raw": "{{secondhand_mobile}}/buyer/order/{{SecondhandMobile_ID_Buyer_Order}}",
+							"host": [
+								"{{secondhand_mobile}}"
+							],
+							"path": [
+								"buyer",
+								"order",
+								"{{SecondhandMobile_ID_Buyer_Order}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Buyer - Order -ID",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response time is less than 2000ms\", function () {\r",
+									"    pm.expect(pm.response.responseTime).to.be.below(2000);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "access_token",
+								"value": "{{SecondhandMobile_AccessToken_Buyer}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"bid_price\": 1000000\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{secondhand_mobile}}/buyer/order/{{SecondhandMobile_ID_Buyer_Order}}",
+							"host": [
+								"{{secondhand_mobile}}"
+							],
+							"path": [
+								"buyer",
+								"order",
+								"{{SecondhandMobile_ID_Buyer_Order}}"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Buyer Product",
+			"item": [
+				{
+					"name": "Buyer - Product",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response time is less than 2000ms\", function () {\r",
+									"    pm.expect(pm.response.responseTime).to.be.below(2000);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "access_token",
+								"value": "{{SecondhandMobile_AccessToken_Buyer}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{secondhand_mobile}}/buyer/product",
+							"host": [
+								"{{secondhand_mobile}}"
+							],
+							"path": [
+								"buyer",
+								"product"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Buyer - Product-ID",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response time is less than 2000ms\", function () {\r",
+									"    pm.expect(pm.response.responseTime).to.be.below(2000);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "access_token",
+								"value": "{{SecondhandMobile_AccessToken_Buyer}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{secondhand_mobile}}/buyer/product/1",
+							"host": [
+								"{{secondhand_mobile}}"
+							],
+							"path": [
+								"buyer",
+								"product",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Buyer Wishlist",
+			"item": [
+				{
+					"name": "Buyer - wishlist",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 201\", function () {\r",
+									"    pm.response.to.have.status(201);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response time is less than 2000ms\", function () {\r",
+									"    pm.expect(pm.response.responseTime).to.be.below(2000);\r",
+									"});\r",
+									"\r",
+									"\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "access_token",
+								"value": "{{SecondhandMobile_AccessToken_Buyer}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"product_id\": 3\r\n\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{secondhand_mobile}}/buyer/wishlist",
+							"host": [
+								"{{secondhand_mobile}}"
+							],
+							"path": [
+								"buyer",
+								"wishlist"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Buyer - Wishlist",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response time is less than 2000ms\", function () {\r",
+									"    pm.expect(pm.response.responseTime).to.be.below(2000);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "access_token",
+								"value": "{{SecondhandMobile_AccessToken_Buyer}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{secondhand_mobile}}/buyer/wishlist",
+							"host": [
+								"{{secondhand_mobile}}"
+							],
+							"path": [
+								"buyer",
+								"wishlist"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Buyer - Wishlist-ID",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response time is less than 2000ms\", function () {\r",
+									"    pm.expect(pm.response.responseTime).to.be.below(2000);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "access_token",
+								"value": "{{SecondhandMobile_AccessToken_Buyer}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{secondhand_mobile}}/buyer/wishlist/6227",
+							"host": [
+								"{{secondhand_mobile}}"
+							],
+							"path": [
+								"buyer",
+								"wishlist",
+								"6227"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Buyer - Wishlist-ID",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response time is less than 2000ms\", function () {\r",
+									"    pm.expect(pm.response.responseTime).to.be.below(2000);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "access_token",
+								"value": "{{SecondhandMobile_AccessToken_Buyer}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{secondhand_mobile}}/buyer/wishlist/6227",
+							"host": [
+								"{{secondhand_mobile}}"
+							],
+							"path": [
+								"buyer",
+								"wishlist",
+								"6227"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Seller-Order",
+			"item": [
+				{
+					"name": "Seller-Order",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"// Define an array of random IT computer product names\r",
+									"const computerProductNames = [\r",
+									"    \"Laptop\", \"Desktop Computer\", \"Monitor\", \"Keyboard\", \"Mouse\", \"Router\", \"External Hard Drive\",\r",
+									"    \"Webcam\", \"Printer\", \"Scanner\", \"Graphics Card\", \"Motherboard\", \"CPU\", \"RAM\", \"SSD\",\r",
+									"    \"Software License\", \"Tablet\", \"Server\", \"UPS\", \"Network Switch\"\r",
+									"];\r",
+									"// Generate a random IT computer product name\r",
+									"function generateRandomComputerProductName() {\r",
+									"    const randomIndex = Math.floor(Math.random() * computerProductNames.length);\r",
+									"    return computerProductNames[randomIndex];\r",
+									"}\r",
+									"const randomComputerProductName = generateRandomComputerProductName();\r",
+									"// Store the random computer product name in an environment variable\r",
+									"pm.environment.set('random_computer_product_name', randomComputerProductName);\r",
+									"\r",
+									"// Define an array of random product descriptions\r",
+									"const productDescriptions = [\r",
+									"    \"High-performance and reliable\",\r",
+									"    \"Sleek and modern design\",\r",
+									"    \"Built to last with top-quality materials\",\r",
+									"    \"Versatile and easy to use\",\r",
+									"    \"Cutting-edge technology for superior performance\",\r",
+									"    \"Ergonomically designed for comfort\",\r",
+									"    \"Enhance your productivity with this product\",\r",
+									"    \"Experience the future of technology\",\r",
+									"    \"Affordable and feature-packed\",\r",
+									"    \"Innovative and stylish\",\r",
+									"    \"Ideal for both personal and professional use\",\r",
+									"    \"Eco-friendly and energy-efficient\",\r",
+									"    \"Seamless connectivity and compatibility\",\r",
+									"    \"Get the job done with ease\",\r",
+									"    \"Upgrade your setup with this exceptional product\",\r",
+									"    \"Stay ahead with the latest in tech\",\r",
+									"];\r",
+									"\r",
+									"// Generate a random product description\r",
+									"function generateRandomProductDescription() {\r",
+									"    const randomIndex = Math.floor(Math.random() * productDescriptions.length);\r",
+									"    return productDescriptions[randomIndex];\r",
+									"}\r",
+									"const randomProductDescription = generateRandomProductDescription();\r",
+									"// Store the random product description in an environment variable\r",
+									"pm.environment.set('random_product_description', randomProductDescription);\r",
+									"\r",
+									"// Generate a random product price\r",
+									"function generateRandomProductPrice(min, max, decimalPlaces) {\r",
+									"    const price = (Math.random() * (max - min) + min).toFixed(decimalPlaces);\r",
+									"    return parseFloat(price).toFixed(decimalPlaces);\r",
+									"}\r",
+									"const minPrice = 100000.00; // Define the minimum price\r",
+									"const maxPrice = 5000000.00; // Define the maximum price\r",
+									"const decimalPlaces = 0; // Define the number of decimal places\r",
+									"const randomProductPrice = generateRandomProductPrice(minPrice, maxPrice, decimalPlaces);\r",
+									"// Store the random product price in an environment variable\r",
+									"pm.environment.set('random_product_price', randomProductPrice);\r",
+									"\r",
+									"// Generate a random-looking Indonesian address\r",
+									"function generateRandomIndonesianAddress() {\r",
+									"    const streets = [\"Jalan Merdeka\", \"Jalan Pahlawan\", \"Jalan Raya\", \"Jalan Cendrawasih\", \"Jalan Budi Utomo\", \"Jalan Diponegoro\"];\r",
+									"    const cities = [\"Jakarta\", \"Surabaya\", \"Bandung\", \"Yogyakarta\", \"Medan\", \"Semarang\"];\r",
+									"    const provinces = [\"Jakarta\", \"East Java\", \"West Java\", \"Yogyakarta\", \"North Sumatra\", \"Central Java\"];\r",
+									"    \r",
+									"    const randomStreet = streets[Math.floor(Math.random() * streets.length)];\r",
+									"    const randomCity = cities[Math.floor(Math.random() * cities.length)];\r",
+									"    const randomProvince = provinces[Math.floor(Math.random() * provinces.length)];\r",
+									"    \r",
+									"    return `${randomStreet}, ${randomCity}, ${randomProvince}`;\r",
+									"}\r",
+									"const randomIndonesianAddress = generateRandomIndonesianAddress();\r",
+									"// Store the random Indonesian address in an environment variable\r",
+									"pm.environment.set('random_indonesian_address', randomIndonesianAddress);\r",
+									"// Extract the city from the generated address\r",
+									"const city = randomIndonesianAddress.split(', ')[1];\r",
+									"// Store the extracted city in an environment variable\r",
+									"pm.environment.set('random_indonesian_city', city);\r",
+									"\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response time is less than 2000ms\", function () {\r",
+									"    pm.expect(pm.response.responseTime).to.be.below(2000);\r",
+									"});\r",
+									"var jsonData = pm.response.json();\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "access_token",
+								"value": "{{SecondhandMobile_AccessToken_Seller}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "status",
+									"value": "accepted",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{secondhand_mobile}}/seller/order?status=accepted",
+							"host": [
+								"{{secondhand_mobile}}"
+							],
+							"path": [
+								"seller",
+								"order"
+							],
+							"query": [
+								{
+									"key": "status",
+									"value": "accepted"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Seller-Order-ID",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response time is less than 2000ms\", function () {\r",
+									"    pm.expect(pm.response.responseTime).to.be.below(2000);\r",
+									"});\r",
+									"var jsonData = pm.response.json();\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "access_token",
+								"value": "{{SecondhandMobile_AccessToken_Seller}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{secondhand_mobile}}/seller/order/{{SecondhandMobile_ID_Buyer_Order}}",
+							"host": [
+								"{{secondhand_mobile}}"
+							],
+							"path": [
+								"seller",
+								"order",
+								"{{SecondhandMobile_ID_Buyer_Order}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Seller-Order-ID",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"// Define an array of random IT computer product names\r",
+									"const computerProductNames = [\r",
+									"    \"Laptop\", \"Desktop Computer\", \"Monitor\", \"Keyboard\", \"Mouse\", \"Router\", \"External Hard Drive\",\r",
+									"    \"Webcam\", \"Printer\", \"Scanner\", \"Graphics Card\", \"Motherboard\", \"CPU\", \"RAM\", \"SSD\",\r",
+									"    \"Software License\", \"Tablet\", \"Server\", \"UPS\", \"Network Switch\"\r",
+									"];\r",
+									"// Generate a random IT computer product name\r",
+									"function generateRandomComputerProductName() {\r",
+									"    const randomIndex = Math.floor(Math.random() * computerProductNames.length);\r",
+									"    return computerProductNames[randomIndex];\r",
+									"}\r",
+									"const randomComputerProductName = generateRandomComputerProductName();\r",
+									"// Store the random computer product name in an environment variable\r",
+									"pm.environment.set('random_computer_product_name', randomComputerProductName);\r",
+									"\r",
+									"// Define an array of random product descriptions\r",
+									"const productDescriptions = [\r",
+									"    \"High-performance and reliable\",\r",
+									"    \"Sleek and modern design\",\r",
+									"    \"Built to last with top-quality materials\",\r",
+									"    \"Versatile and easy to use\",\r",
+									"    \"Cutting-edge technology for superior performance\",\r",
+									"    \"Ergonomically designed for comfort\",\r",
+									"    \"Enhance your productivity with this product\",\r",
+									"    \"Experience the future of technology\",\r",
+									"    \"Affordable and feature-packed\",\r",
+									"    \"Innovative and stylish\",\r",
+									"    \"Ideal for both personal and professional use\",\r",
+									"    \"Eco-friendly and energy-efficient\",\r",
+									"    \"Seamless connectivity and compatibility\",\r",
+									"    \"Get the job done with ease\",\r",
+									"    \"Upgrade your setup with this exceptional product\",\r",
+									"    \"Stay ahead with the latest in tech\",\r",
+									"];\r",
+									"\r",
+									"// Generate a random product description\r",
+									"function generateRandomProductDescription() {\r",
+									"    const randomIndex = Math.floor(Math.random() * productDescriptions.length);\r",
+									"    return productDescriptions[randomIndex];\r",
+									"}\r",
+									"const randomProductDescription = generateRandomProductDescription();\r",
+									"// Store the random product description in an environment variable\r",
+									"pm.environment.set('random_product_description', randomProductDescription);\r",
+									"\r",
+									"// Generate a random product price\r",
+									"function generateRandomProductPrice(min, max, decimalPlaces) {\r",
+									"    const price = (Math.random() * (max - min) + min).toFixed(decimalPlaces);\r",
+									"    return parseFloat(price).toFixed(decimalPlaces);\r",
+									"}\r",
+									"const minPrice = 100000.00; // Define the minimum price\r",
+									"const maxPrice = 5000000.00; // Define the maximum price\r",
+									"const decimalPlaces = 0; // Define the number of decimal places\r",
+									"const randomProductPrice = generateRandomProductPrice(minPrice, maxPrice, decimalPlaces);\r",
+									"// Store the random product price in an environment variable\r",
+									"pm.environment.set('random_product_price', randomProductPrice);\r",
+									"\r",
+									"// Generate a random-looking Indonesian address\r",
+									"function generateRandomIndonesianAddress() {\r",
+									"    const streets = [\"Jalan Merdeka\", \"Jalan Pahlawan\", \"Jalan Raya\", \"Jalan Cendrawasih\", \"Jalan Budi Utomo\", \"Jalan Diponegoro\"];\r",
+									"    const cities = [\"Jakarta\", \"Surabaya\", \"Bandung\", \"Yogyakarta\", \"Medan\", \"Semarang\"];\r",
+									"    const provinces = [\"Jakarta\", \"East Java\", \"West Java\", \"Yogyakarta\", \"North Sumatra\", \"Central Java\"];\r",
+									"    \r",
+									"    const randomStreet = streets[Math.floor(Math.random() * streets.length)];\r",
+									"    const randomCity = cities[Math.floor(Math.random() * cities.length)];\r",
+									"    const randomProvince = provinces[Math.floor(Math.random() * provinces.length)];\r",
+									"    \r",
+									"    return `${randomStreet}, ${randomCity}, ${randomProvince}`;\r",
+									"}\r",
+									"const randomIndonesianAddress = generateRandomIndonesianAddress();\r",
+									"// Store the random Indonesian address in an environment variable\r",
+									"pm.environment.set('random_indonesian_address', randomIndonesianAddress);\r",
+									"// Extract the city from the generated address\r",
+									"const city = randomIndonesianAddress.split(', ')[1];\r",
+									"// Store the extracted city in an environment variable\r",
+									"pm.environment.set('random_indonesian_city', city);\r",
+									"\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response time is less than 2000ms\", function () {\r",
+									"    pm.expect(pm.response.responseTime).to.be.below(2000);\r",
+									"});\r",
+									"var jsonData = pm.response.json();\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "access_token",
+								"value": "{{SecondhandMobile_AccessToken_Seller}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "status",
+									"value": "accepted",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{secondhand_mobile}}/seller/order/{{SecondhandMobile_ID_Buyer_Order}}",
+							"host": [
+								"{{secondhand_mobile}}"
+							],
+							"path": [
+								"seller",
+								"order",
+								"{{SecondhandMobile_ID_Buyer_Order}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "seller-order-product-ID",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"// Define an array of random IT computer product names\r",
+									"const computerProductNames = [\r",
+									"    \"Laptop\", \"Desktop Computer\", \"Monitor\", \"Keyboard\", \"Mouse\", \"Router\", \"External Hard Drive\",\r",
+									"    \"Webcam\", \"Printer\", \"Scanner\", \"Graphics Card\", \"Motherboard\", \"CPU\", \"RAM\", \"SSD\",\r",
+									"    \"Software License\", \"Tablet\", \"Server\", \"UPS\", \"Network Switch\"\r",
+									"];\r",
+									"// Generate a random IT computer product name\r",
+									"function generateRandomComputerProductName() {\r",
+									"    const randomIndex = Math.floor(Math.random() * computerProductNames.length);\r",
+									"    return computerProductNames[randomIndex];\r",
+									"}\r",
+									"const randomComputerProductName = generateRandomComputerProductName();\r",
+									"// Store the random computer product name in an environment variable\r",
+									"pm.environment.set('random_computer_product_name', randomComputerProductName);\r",
+									"\r",
+									"// Define an array of random product descriptions\r",
+									"const productDescriptions = [\r",
+									"    \"High-performance and reliable\",\r",
+									"    \"Sleek and modern design\",\r",
+									"    \"Built to last with top-quality materials\",\r",
+									"    \"Versatile and easy to use\",\r",
+									"    \"Cutting-edge technology for superior performance\",\r",
+									"    \"Ergonomically designed for comfort\",\r",
+									"    \"Enhance your productivity with this product\",\r",
+									"    \"Experience the future of technology\",\r",
+									"    \"Affordable and feature-packed\",\r",
+									"    \"Innovative and stylish\",\r",
+									"    \"Ideal for both personal and professional use\",\r",
+									"    \"Eco-friendly and energy-efficient\",\r",
+									"    \"Seamless connectivity and compatibility\",\r",
+									"    \"Get the job done with ease\",\r",
+									"    \"Upgrade your setup with this exceptional product\",\r",
+									"    \"Stay ahead with the latest in tech\",\r",
+									"];\r",
+									"\r",
+									"// Generate a random product description\r",
+									"function generateRandomProductDescription() {\r",
+									"    const randomIndex = Math.floor(Math.random() * productDescriptions.length);\r",
+									"    return productDescriptions[randomIndex];\r",
+									"}\r",
+									"const randomProductDescription = generateRandomProductDescription();\r",
+									"// Store the random product description in an environment variable\r",
+									"pm.environment.set('random_product_description', randomProductDescription);\r",
+									"\r",
+									"// Generate a random product price\r",
+									"function generateRandomProductPrice(min, max, decimalPlaces) {\r",
+									"    const price = (Math.random() * (max - min) + min).toFixed(decimalPlaces);\r",
+									"    return parseFloat(price).toFixed(decimalPlaces);\r",
+									"}\r",
+									"const minPrice = 100000.00; // Define the minimum price\r",
+									"const maxPrice = 5000000.00; // Define the maximum price\r",
+									"const decimalPlaces = 0; // Define the number of decimal places\r",
+									"const randomProductPrice = generateRandomProductPrice(minPrice, maxPrice, decimalPlaces);\r",
+									"// Store the random product price in an environment variable\r",
+									"pm.environment.set('random_product_price', randomProductPrice);\r",
+									"\r",
+									"// Generate a random-looking Indonesian address\r",
+									"function generateRandomIndonesianAddress() {\r",
+									"    const streets = [\"Jalan Merdeka\", \"Jalan Pahlawan\", \"Jalan Raya\", \"Jalan Cendrawasih\", \"Jalan Budi Utomo\", \"Jalan Diponegoro\"];\r",
+									"    const cities = [\"Jakarta\", \"Surabaya\", \"Bandung\", \"Yogyakarta\", \"Medan\", \"Semarang\"];\r",
+									"    const provinces = [\"Jakarta\", \"East Java\", \"West Java\", \"Yogyakarta\", \"North Sumatra\", \"Central Java\"];\r",
+									"    \r",
+									"    const randomStreet = streets[Math.floor(Math.random() * streets.length)];\r",
+									"    const randomCity = cities[Math.floor(Math.random() * cities.length)];\r",
+									"    const randomProvince = provinces[Math.floor(Math.random() * provinces.length)];\r",
+									"    \r",
+									"    return `${randomStreet}, ${randomCity}, ${randomProvince}`;\r",
+									"}\r",
+									"const randomIndonesianAddress = generateRandomIndonesianAddress();\r",
+									"// Store the random Indonesian address in an environment variable\r",
+									"pm.environment.set('random_indonesian_address', randomIndonesianAddress);\r",
+									"// Extract the city from the generated address\r",
+									"const city = randomIndonesianAddress.split(', ')[1];\r",
+									"// Store the extracted city in an environment variable\r",
+									"pm.environment.set('random_indonesian_city', city);\r",
+									"\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response time is less than 2000ms\", function () {\r",
+									"    pm.expect(pm.response.responseTime).to.be.below(2000);\r",
+									"});\r",
+									"var jsonData = pm.response.json();\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "access_token",
+								"value": "{{SecondhandMobile_AccessToken_Seller}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "status",
+									"value": "accepted",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{secondhand_mobile}}/seller/order/product/{{SecondhandMobile_idBarang}}",
+							"host": [
+								"{{secondhand_mobile}}"
+							],
+							"path": [
+								"seller",
+								"order",
+								"product",
+								"{{SecondhandMobile_idBarang}}"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Seller Category",
+			"item": [
+				{
+					"name": "Seller Category",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"// Define an array of random IT computer product names\r",
+									"const computerProductNames = [\r",
+									"    \"Laptop\", \"Desktop Computer\", \"Monitor\", \"Keyboard\", \"Mouse\", \"Router\", \"External Hard Drive\",\r",
+									"    \"Webcam\", \"Printer\", \"Scanner\", \"Graphics Card\", \"Motherboard\", \"CPU\", \"RAM\", \"SSD\",\r",
+									"    \"Software License\", \"Tablet\", \"Server\", \"UPS\", \"Network Switch\"\r",
+									"];\r",
+									"// Generate a random IT computer product name\r",
+									"function generateRandomComputerProductName() {\r",
+									"    const randomIndex = Math.floor(Math.random() * computerProductNames.length);\r",
+									"    return computerProductNames[randomIndex];\r",
+									"}\r",
+									"const randomComputerProductName = generateRandomComputerProductName();\r",
+									"// Store the random computer product name in an environment variable\r",
+									"pm.environment.set('random_computer_product_name', randomComputerProductName);\r",
+									"\r",
+									"// Define an array of random product descriptions\r",
+									"const productDescriptions = [\r",
+									"    \"High-performance and reliable\",\r",
+									"    \"Sleek and modern design\",\r",
+									"    \"Built to last with top-quality materials\",\r",
+									"    \"Versatile and easy to use\",\r",
+									"    \"Cutting-edge technology for superior performance\",\r",
+									"    \"Ergonomically designed for comfort\",\r",
+									"    \"Enhance your productivity with this product\",\r",
+									"    \"Experience the future of technology\",\r",
+									"    \"Affordable and feature-packed\",\r",
+									"    \"Innovative and stylish\",\r",
+									"    \"Ideal for both personal and professional use\",\r",
+									"    \"Eco-friendly and energy-efficient\",\r",
+									"    \"Seamless connectivity and compatibility\",\r",
+									"    \"Get the job done with ease\",\r",
+									"    \"Upgrade your setup with this exceptional product\",\r",
+									"    \"Stay ahead with the latest in tech\",\r",
+									"];\r",
+									"\r",
+									"// Generate a random product description\r",
+									"function generateRandomProductDescription() {\r",
+									"    const randomIndex = Math.floor(Math.random() * productDescriptions.length);\r",
+									"    return productDescriptions[randomIndex];\r",
+									"}\r",
+									"const randomProductDescription = generateRandomProductDescription();\r",
+									"// Store the random product description in an environment variable\r",
+									"pm.environment.set('random_product_description', randomProductDescription);\r",
+									"\r",
+									"// Generate a random product price\r",
+									"function generateRandomProductPrice(min, max, decimalPlaces) {\r",
+									"    const price = (Math.random() * (max - min) + min).toFixed(decimalPlaces);\r",
+									"    return parseFloat(price).toFixed(decimalPlaces);\r",
+									"}\r",
+									"const minPrice = 100000.00; // Define the minimum price\r",
+									"const maxPrice = 5000000.00; // Define the maximum price\r",
+									"const decimalPlaces = 0; // Define the number of decimal places\r",
+									"const randomProductPrice = generateRandomProductPrice(minPrice, maxPrice, decimalPlaces);\r",
+									"// Store the random product price in an environment variable\r",
+									"pm.environment.set('random_product_price', randomProductPrice);\r",
+									"\r",
+									"// Generate a random-looking Indonesian address\r",
+									"function generateRandomIndonesianAddress() {\r",
+									"    const streets = [\"Jalan Merdeka\", \"Jalan Pahlawan\", \"Jalan Raya\", \"Jalan Cendrawasih\", \"Jalan Budi Utomo\", \"Jalan Diponegoro\"];\r",
+									"    const cities = [\"Jakarta\", \"Surabaya\", \"Bandung\", \"Yogyakarta\", \"Medan\", \"Semarang\"];\r",
+									"    const provinces = [\"Jakarta\", \"East Java\", \"West Java\", \"Yogyakarta\", \"North Sumatra\", \"Central Java\"];\r",
+									"    \r",
+									"    const randomStreet = streets[Math.floor(Math.random() * streets.length)];\r",
+									"    const randomCity = cities[Math.floor(Math.random() * cities.length)];\r",
+									"    const randomProvince = provinces[Math.floor(Math.random() * provinces.length)];\r",
+									"    \r",
+									"    return `${randomStreet}, ${randomCity}, ${randomProvince}`;\r",
+									"}\r",
+									"const randomIndonesianAddress = generateRandomIndonesianAddress();\r",
+									"// Store the random Indonesian address in an environment variable\r",
+									"pm.environment.set('random_indonesian_address', randomIndonesianAddress);\r",
+									"// Extract the city from the generated address\r",
+									"const city = randomIndonesianAddress.split(', ')[1];\r",
+									"// Store the extracted city in an environment variable\r",
+									"pm.environment.set('random_indonesian_city', city);\r",
+									"\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response time is less than 2000ms\", function () {\r",
+									"    pm.expect(pm.response.responseTime).to.be.below(2000);\r",
+									"});\r",
+									"var jsonData = pm.response.json();\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "access_token",
+								"value": "{{SecondhandMobile_AccessToken_Seller}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{secondhand_mobile}}/seller/category",
+							"host": [
+								"{{secondhand_mobile}}"
+							],
+							"path": [
+								"seller",
+								"category"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Seller Category ID",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"// Define an array of random IT computer product names\r",
+									"const computerProductNames = [\r",
+									"    \"Laptop\", \"Desktop Computer\", \"Monitor\", \"Keyboard\", \"Mouse\", \"Router\", \"External Hard Drive\",\r",
+									"    \"Webcam\", \"Printer\", \"Scanner\", \"Graphics Card\", \"Motherboard\", \"CPU\", \"RAM\", \"SSD\",\r",
+									"    \"Software License\", \"Tablet\", \"Server\", \"UPS\", \"Network Switch\"\r",
+									"];\r",
+									"// Generate a random IT computer product name\r",
+									"function generateRandomComputerProductName() {\r",
+									"    const randomIndex = Math.floor(Math.random() * computerProductNames.length);\r",
+									"    return computerProductNames[randomIndex];\r",
+									"}\r",
+									"const randomComputerProductName = generateRandomComputerProductName();\r",
+									"// Store the random computer product name in an environment variable\r",
+									"pm.environment.set('random_computer_product_name', randomComputerProductName);\r",
+									"\r",
+									"// Define an array of random product descriptions\r",
+									"const productDescriptions = [\r",
+									"    \"High-performance and reliable\",\r",
+									"    \"Sleek and modern design\",\r",
+									"    \"Built to last with top-quality materials\",\r",
+									"    \"Versatile and easy to use\",\r",
+									"    \"Cutting-edge technology for superior performance\",\r",
+									"    \"Ergonomically designed for comfort\",\r",
+									"    \"Enhance your productivity with this product\",\r",
+									"    \"Experience the future of technology\",\r",
+									"    \"Affordable and feature-packed\",\r",
+									"    \"Innovative and stylish\",\r",
+									"    \"Ideal for both personal and professional use\",\r",
+									"    \"Eco-friendly and energy-efficient\",\r",
+									"    \"Seamless connectivity and compatibility\",\r",
+									"    \"Get the job done with ease\",\r",
+									"    \"Upgrade your setup with this exceptional product\",\r",
+									"    \"Stay ahead with the latest in tech\",\r",
+									"];\r",
+									"\r",
+									"// Generate a random product description\r",
+									"function generateRandomProductDescription() {\r",
+									"    const randomIndex = Math.floor(Math.random() * productDescriptions.length);\r",
+									"    return productDescriptions[randomIndex];\r",
+									"}\r",
+									"const randomProductDescription = generateRandomProductDescription();\r",
+									"// Store the random product description in an environment variable\r",
+									"pm.environment.set('random_product_description', randomProductDescription);\r",
+									"\r",
+									"// Generate a random product price\r",
+									"function generateRandomProductPrice(min, max, decimalPlaces) {\r",
+									"    const price = (Math.random() * (max - min) + min).toFixed(decimalPlaces);\r",
+									"    return parseFloat(price).toFixed(decimalPlaces);\r",
+									"}\r",
+									"const minPrice = 100000.00; // Define the minimum price\r",
+									"const maxPrice = 5000000.00; // Define the maximum price\r",
+									"const decimalPlaces = 0; // Define the number of decimal places\r",
+									"const randomProductPrice = generateRandomProductPrice(minPrice, maxPrice, decimalPlaces);\r",
+									"// Store the random product price in an environment variable\r",
+									"pm.environment.set('random_product_price', randomProductPrice);\r",
+									"\r",
+									"// Generate a random-looking Indonesian address\r",
+									"function generateRandomIndonesianAddress() {\r",
+									"    const streets = [\"Jalan Merdeka\", \"Jalan Pahlawan\", \"Jalan Raya\", \"Jalan Cendrawasih\", \"Jalan Budi Utomo\", \"Jalan Diponegoro\"];\r",
+									"    const cities = [\"Jakarta\", \"Surabaya\", \"Bandung\", \"Yogyakarta\", \"Medan\", \"Semarang\"];\r",
+									"    const provinces = [\"Jakarta\", \"East Java\", \"West Java\", \"Yogyakarta\", \"North Sumatra\", \"Central Java\"];\r",
+									"    \r",
+									"    const randomStreet = streets[Math.floor(Math.random() * streets.length)];\r",
+									"    const randomCity = cities[Math.floor(Math.random() * cities.length)];\r",
+									"    const randomProvince = provinces[Math.floor(Math.random() * provinces.length)];\r",
+									"    \r",
+									"    return `${randomStreet}, ${randomCity}, ${randomProvince}`;\r",
+									"}\r",
+									"const randomIndonesianAddress = generateRandomIndonesianAddress();\r",
+									"// Store the random Indonesian address in an environment variable\r",
+									"pm.environment.set('random_indonesian_address', randomIndonesianAddress);\r",
+									"// Extract the city from the generated address\r",
+									"const city = randomIndonesianAddress.split(', ')[1];\r",
+									"// Store the extracted city in an environment variable\r",
+									"pm.environment.set('random_indonesian_city', city);\r",
+									"\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response time is less than 2000ms\", function () {\r",
+									"    pm.expect(pm.response.responseTime).to.be.below(2000);\r",
+									"});\r",
+									"var jsonData = pm.response.json();\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "access_token",
+								"value": "{{SecondhandMobile_AccessToken_Seller}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						},
+						"url": {
+							"raw": "{{secondhand_mobile}}/seller/category/1",
+							"host": [
+								"{{secondhand_mobile}}"
+							],
+							"path": [
+								"seller",
+								"category",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Seller Banner",
+			"item": [
+				{
+					"name": "Seller Banner",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response time is less than 2000ms\", function () {\r",
+									"    pm.expect(pm.response.responseTime).to.be.below(2000);\r",
+									"});\r",
+									"var jsonData = pm.response.json();\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "access_token",
+								"value": "{{SecondhandMobile_AccessToken_Seller}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{secondhand_mobile}}/seller/banner",
+							"host": [
+								"{{secondhand_mobile}}"
+							],
+							"path": [
+								"seller",
+								"banner"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Seller Category ID",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response time is less than 2000ms\", function () {\r",
+									"    pm.expect(pm.response.responseTime).to.be.below(2000);\r",
+									"});\r",
+									"var jsonData = pm.response.json();\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "access_token",
+								"value": "{{SecondhandMobile_AccessToken_Seller}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						},
+						"url": {
+							"raw": "{{secondhand_mobile}}/seller/banner/1",
+							"host": [
+								"{{secondhand_mobile}}"
+							],
+							"path": [
+								"seller",
+								"banner",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "History",
+			"item": [
+				{
+					"name": "History",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response time is less than 2000ms\", function () {\r",
+									"    pm.expect(pm.response.responseTime).to.be.below(2000);\r",
+									"});\r",
+									"\r",
+									"\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "access_token",
+								"value": "{{SecondhandMobile_AccessToken_Seller}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{secondhand_mobile}}/history",
+							"host": [
+								"{{secondhand_mobile}}"
+							],
+							"path": [
+								"history"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "History-ID",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response time is less than 2000ms\", function () {\r",
+									"    pm.expect(pm.response.responseTime).to.be.below(2000);\r",
+									"});\r",
+									"\r",
+									"\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "access_token",
+								"value": "{{SecondhandMobile_AccessToken_Seller}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{secondhand_mobile}}/history",
+							"host": [
+								"{{secondhand_mobile}}"
+							],
+							"path": [
+								"history"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Notification",
+			"item": [
+				{
+					"name": "Notification",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response time is less than 2000ms\", function () {\r",
+									"    pm.expect(pm.response.responseTime).to.be.below(2000);\r",
+									"});\r",
+									"\r",
+									"var jsonData = pm.response.json();\r",
+									"\r",
+									"pm.environment.set(\"SecondhandMobile_Notif\", jsonData.id);\r",
+									"\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "access_token",
+								"value": "{{SecondhandMobile_AccessToken_Seller}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						},
+						"url": {
+							"raw": "{{secondhand_mobile}}/notification?notification_type=seller",
+							"host": [
+								"{{secondhand_mobile}}"
+							],
+							"path": [
+								"notification"
+							],
+							"query": [
+								{
+									"key": "notification_type",
+									"value": "seller"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Notification-ID",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response time is less than 2000ms\", function () {\r",
+									"    pm.expect(pm.response.responseTime).to.be.below(2000);\r",
+									"});\r",
+									"\r",
+									"\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "access_token",
+								"value": "{{SecondhandMobile_AccessToken_Seller}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						},
+						"url": {
+							"raw": "{{secondhand_mobile}}/notification/206174",
+							"host": [
+								"{{secondhand_mobile}}"
+							],
+							"path": [
+								"notification",
+								"206174"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Notification-ID",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response time is less than 2000ms\", function () {\r",
+									"    pm.expect(pm.response.responseTime).to.be.below(2000);\r",
+									"});\r",
+									"\r",
+									"\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "access_token",
+								"value": "{{SecondhandMobile_AccessToken_Seller}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						},
+						"url": {
+							"raw": "{{secondhand_mobile}}/notification/206174",
+							"host": [
+								"{{secondhand_mobile}}"
+							],
+							"path": [
+								"notification",
+								"206174"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Delete",
+			"item": [
+				{
+					"name": "Auth User",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"// Generate a random name\r",
+									"function generateRandomName() {\r",
+									"    const firstNames = [\"John\", \"Alice\", \"Bob\", \"Emma\", \"David\",\"Jhony\"]; // Add more first names as needed\r",
+									"    const lastNames = [\"Smith\", \"Johnson\", \"Doe\", \"Brown\", \"Wilson\"]; // Add more last names as needed\r",
+									"    const randomFirstName = firstNames[Math.floor(Math.random() * firstNames.length)];\r",
+									"    const randomLastName = lastNames[Math.floor(Math.random() * lastNames.length)];\r",
+									"    return `${randomFirstName} ${randomLastName}`;\r",
+									"}\r",
+									"const randomName = generateRandomName();\r",
+									"// Store the random name in an environment variable\r",
+									"pm.environment.set('random_name', randomName);\r",
+									"\r",
+									"\r",
+									"// Generate a random email address\r",
+									"function generateRandomEmail() {\r",
+									"    const username = Math.random().toString(36).substring(2, 12); // Generate a random username\r",
+									"    const domain = 'google.com'; // Replace 'example.com' with your desired domain\r",
+									"    return `${username}@${domain}`;\r",
+									"}\r",
+									"const randomEmail = generateRandomEmail();\r",
+									"// Store the random email in an environment variable\r",
+									"pm.environment.set('random_email', randomEmail);\r",
+									"// Generate a random-looking Indonesian phone number\r",
+									"function generateRandomIndonesianPhoneNumber() {\r",
+									"    const prefixOptions = [\"0811\", \"0812\", \"0813\", \"0821\", \"0822\", \"0823\", \"0851\", \"0852\", \"0853\", \"0814\", \"0815\", \"0816\", \"0855\"];\r",
+									"    const selectedPrefix = prefixOptions[Math.floor(Math.random() * prefixOptions.length)];\r",
+									"    const remainingDigits = Math.floor(Math.random() * 1000000000).toString().padStart(9, '0');\r",
+									"    return selectedPrefix + remainingDigits;\r",
+									"}\r",
+									"const randomIndonesianPhoneNumber = generateRandomIndonesianPhoneNumber();\r",
+									"// Store the random Indonesian phone number in an environment variable\r",
+									"pm.environment.set('random_indonesian_phone_number', randomIndonesianPhoneNumber);\r",
+									"\r",
+									"// Generate a random-looking Indonesian address\r",
+									"function generateRandomIndonesianAddress() {\r",
+									"    const streets = [\"Jalan Merdeka\", \"Jalan Pahlawan\", \"Jalan Raya\", \"Jalan Cendrawasih\", \"Jalan Budi Utomo\", \"Jalan Diponegoro\"];\r",
+									"    const cities = [\"Jakarta\", \"Surabaya\", \"Bandung\", \"Yogyakarta\", \"Medan\", \"Semarang\"];\r",
+									"    const provinces = [\"Jakarta\", \"East Java\", \"West Java\", \"Yogyakarta\", \"North Sumatra\", \"Central Java\"];\r",
+									"    \r",
+									"    const randomStreet = streets[Math.floor(Math.random() * streets.length)];\r",
+									"    const randomCity = cities[Math.floor(Math.random() * cities.length)];\r",
+									"    const randomProvince = provinces[Math.floor(Math.random() * provinces.length)];\r",
+									"    \r",
+									"    return `${randomStreet}, ${randomCity}, ${randomProvince}`;\r",
+									"}\r",
+									"const randomIndonesianAddress = generateRandomIndonesianAddress();\r",
+									"// Store the random Indonesian address in an environment variable\r",
+									"pm.environment.set('random_indonesian_address', randomIndonesianAddress);\r",
+									"// Extract the city from the generated address\r",
+									"const city = randomIndonesianAddress.split(', ')[1];\r",
+									"// Store the extracted city in an environment variable\r",
+									"pm.environment.set('random_indonesian_city', city);\r",
+									"\r",
+									"pm.environment.set('Password', \"123456\");"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(20);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response time is less than 2000ms\", function () {\r",
+									"    pm.expect(pm.response.responseTime).to.be.below(2000);\r",
+									"});\r",
+									"\r",
+									"var jsonData = pm.response.json();\r",
+									"\r",
+									"pm.environment.set(\"SecondhandMobile_AccessToken_Seller\", jsonData.access_token);\r",
+									"\r",
+									"\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "access_token",
+								"value": "{{SecondhandMobile_AccessTokenUser}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "full_name",
+									"value": "{{random_name}}",
+									"type": "text"
+								},
+								{
+									"key": "email",
+									"value": "{{random_email}}",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "{{Password}}",
+									"type": "text"
+								},
+								{
+									"key": "phone_number",
+									"value": "{{random_indonesian_phone_number}}",
+									"type": "text"
+								},
+								{
+									"key": "address",
+									"value": "{{random_indonesian_address}}",
+									"type": "text"
+								},
+								{
+									"key": "image",
+									"type": "file",
+									"src": []
+								},
+								{
+									"key": "city",
+									"value": "{{random_indonesian_city}}",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{secondhand_mobile}}/auth/user",
+							"host": [
+								"{{secondhand_mobile}}"
+							],
+							"path": [
+								"auth",
+								"user"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Buyer - Order -ID",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response time is less than 2000ms\", function () {\r",
+									"    pm.expect(pm.response.responseTime).to.be.below(2000);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "access_token",
+								"value": "{{SecondhandMobile_AccessToken_Buyer}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{secondhand_mobile}}/buyer/order/{{SecondhandMobile_ID_Buyer_Order}}",
+							"host": [
+								"{{secondhand_mobile}}"
+							],
+							"path": [
+								"buyer",
+								"order",
+								"{{SecondhandMobile_ID_Buyer_Order}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Seller-Product-ID",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response time is less than 2000ms\", function () {\r",
+									"    pm.expect(pm.response.responseTime).to.be.below(2000);\r",
+									"});\r",
+									"\r",
+									"\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "access_token",
+								"value": "{{SecondhandMobile_AccessToken_Seller}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						},
+						"url": {
+							"raw": "{{secondhand_mobile}}/seller/product//{{SecondhandMobile_idBarang}}",
+							"host": [
+								"{{secondhand_mobile}}"
+							],
+							"path": [
+								"seller",
+								"product",
+								"",
+								"{{SecondhandMobile_idBarang}}"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
