@@ -802,41 +802,6 @@
 						}
 					},
 					"response": []
-				},
-				{
-					"name": "Deleted Product",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"exec": [
-									"pm.test(\"Status code is 204\", function () {\r",
-									"    pm.response.to.have.status(204);\r",
-									"});\r",
-									"pm.test(\"Response time is less than 2000ms\", function () {\r",
-									"    pm.expect(pm.response.responseTime).to.be.below(2000);\r",
-									"});\r",
-									""
-								],
-								"type": "text/javascript"
-							}
-						}
-					],
-					"request": {
-						"method": "DELETE",
-						"header": [],
-						"url": {
-							"raw": "{{secondhand}}/products/{{Secondhand_idBarang}}.json",
-							"host": [
-								"{{secondhand}}"
-							],
-							"path": [
-								"products",
-								"{{Secondhand_idBarang}}.json"
-							]
-						}
-					},
-					"response": []
 				}
 			]
 		},
@@ -950,8 +915,9 @@
 									"pm.test(\"Response time is less than 2000ms\", function () {\r",
 									"    pm.expect(pm.response.responseTime).to.be.below(2000);\r",
 									"});\r",
-									"pm.test(\"Status code is 200\", function () {\r",
-									"    pm.response.to.have.status(200);\r",
+									"\r",
+									"pm.test(\"Successful POST request\", function () {\r",
+									"    pm.expect(pm.response.code).to.be.oneOf([201, 202]);\r",
 									"});"
 								],
 								"type": "text/javascript"
@@ -992,6 +958,41 @@
 					"response": []
 				}
 			]
+		},
+		{
+			"name": "Deleted Product",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 204\", function () {\r",
+							"    pm.response.to.have.status(204);\r",
+							"});\r",
+							"pm.test(\"Response time is less than 2000ms\", function () {\r",
+							"    pm.expect(pm.response.responseTime).to.be.below(2000);\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{secondhand}}/products/{{Secondhand_idBarang}}.json",
+					"host": [
+						"{{secondhand}}"
+					],
+					"path": [
+						"products",
+						"{{Secondhand_idBarang}}.json"
+					]
+				}
+			},
+			"response": []
 		}
 	],
 	"event": [
